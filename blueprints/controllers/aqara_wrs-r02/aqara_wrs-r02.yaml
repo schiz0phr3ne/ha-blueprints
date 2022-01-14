@@ -7,7 +7,7 @@ blueprint:
     d'exécuter tout type d'actions en utilisant les différents boutons
     de l'interrupteur.
     
-    Version 2021.12.7
+    Version ZigBee2MQTT - 2021.12.7
   domain: automation
   input:
     controller_entity:
@@ -17,92 +17,92 @@ blueprint:
         entity:
           domain: sensor
     left_press_single:
-      name: Gauche - appui simple
-      description: Action(s) à exécuter lors d'un appui simple sur l'interrupteur gauche.
+      name: Bouton gauche - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur le bouton gauche.
       default: []
       selector:
         action:   
     left_press_double:
-      name: Gauche - appui double
-      description: Action(s) à exécuter lors d'un appui double sur l'interrupteur gauche.
+      name: Bouton gauche - appui double
+      description: Action(s) à exécuter lors d'un appui double sur le bouton gauche.
       default: []
       selector:
         action: 
     left_press_triple:
-      name: Gauche - appui triple
-      description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur gauche.
+      name: Bouton gauche - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur le bouton gauche.
       default: []
       selector:
         action:
     left_press_hold:
-      name: Gauche - appui maintenu
-      description: Action(s) à exécuter lors d'un appui maintenu sur l'interrupteur gauche.
+      name: Bouton gauche - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur le bouton gauche.
       default: []
       selector:
-        action: {}
+        action: 
     left_press_release:
-      name: Gauche - relâchement d'appui
-      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur l'interrupteur gauche.
+      name: Bouton gauche - relâchement de l'appui maintenu
+      description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur le bouton gauche.
       default: []
       selector:
         action:
     right_press_single:
-      name: Droit - appui simple
-      description: Action(s) à exécuter lors d'un appui simple sur l'interrupteur droit.
+      name: Bouton droit - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur le bouton droit.
       default: []
       selector:
-        action: {}
+        action: 
     right_press_double:
-      name: Droit - appui double
-      description: Action(s) à exécuter lors d'un appui double sur l'interrupteur droit.
+      name: Bouton droit - appui double
+      description: Action(s) à exécuter lors d'un appui double sur le bouton droit.
       default: []
       selector:
         action:
     right_press_triple:
-      name: Droit - appui triple
-      description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur droit.
+      name: Bouton droit - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur le bouton droit.
       default: []
       selector:
         action:
     right_press_hold:
-      name: Droit - appui maintenu
-      description: Action(s) à exécuter lors d'un appui maintenu sur l'interrupteur droit.
+      name: Bouton droit - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur le bouton droit.
       default: []
       selector:
-        action: {}
+        action: 
     right_press_release:
-      name: Droit - relâchement d'appui
-      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur l'interrupteur droit.
+      name: Bouton droit - relâchement de l'appui maintenu
+      description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur le bouton droit.
       default: []
       selector:
         action:
     both_press_single:
-      name: Les deux - appui simple
-      description: Action(s) à exécuter lors d'un appui simple sur les 2 interrupteurs.
+      name: Boutons gauche et droit - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_double:
-      name: Les deux - appui double
-      description: Action(s) à exécuter lors d'un appui double sur les 2 interrupteurs.
+      name: Boutons gauche et droit - appui double
+      description: Action(s) à exécuter lors d'un appui double sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_triple:
-      name: Les deux - appui triple
-      description: Action(s) à exécuter lors d'un appui triple sur les 2 interrupteurs.
+      name: Boutons gauche et droit - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_hold:
-      name: Les deux - appui maintenu
-      description: Action(s) à exécuter lors d'un appui maintenu sur les 2 interrupteurs.
+      name: Boutons gauche et droit - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_release:
-      name: Les deux - relâchement d'appui
-      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur les 2 interrupteurs.
+      name: Boutons gauche et droit - relâchement de l'appui maintenu
+      description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur les 2 boutons.
       default: []
       selector:
         action:
