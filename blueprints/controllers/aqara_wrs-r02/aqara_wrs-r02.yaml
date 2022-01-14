@@ -7,101 +7,102 @@ blueprint:
     d'exécuter tout type d'actions en utilisant les différents boutons
     de l'interrupteur.
     
-    Version ZigBee2MQTT - 2021.12.7
+    Version Zigbee2MQTT - 2021.12.7
   domain: automation
   input:
     controller_entity:
-      name: Contrôleur
+      name: Contrôleur (requis)
       description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
       selector:
         entity:
           domain: sensor
+    # Définitions des actions personnalisées
     left_press_single:
-      name: Bouton gauche - appui simple
+      name: Bouton gauche - appui simple (optionnel)
       description: Action(s) à exécuter lors d'un appui simple sur le bouton gauche.
       default: []
       selector:
         action:   
     left_press_double:
-      name: Bouton gauche - appui double
+      name: Bouton gauche - appui double (optionnel)
       description: Action(s) à exécuter lors d'un appui double sur le bouton gauche.
       default: []
       selector:
         action: 
     left_press_triple:
-      name: Bouton gauche - appui triple
+      name: Bouton gauche - appui triple (optionnel)
       description: Action(s) à exécuter lors d'un appui triple sur le bouton gauche.
       default: []
       selector:
         action:
     left_press_hold:
-      name: Bouton gauche - appui maintenu
+      name: Bouton gauche - appui maintenu (optionnel)
       description: Action(s) à exécuter lors d'un appui maintenu sur le bouton gauche.
       default: []
       selector:
         action: 
     left_press_release:
-      name: Bouton gauche - relâchement de l'appui maintenu
+      name: Bouton gauche - relâchement de l'appui maintenu (optionnel)
       description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur le bouton gauche.
       default: []
       selector:
         action:
     right_press_single:
-      name: Bouton droit - appui simple
+      name: Bouton droit - appui simple (optionnel)
       description: Action(s) à exécuter lors d'un appui simple sur le bouton droit.
       default: []
       selector:
         action: 
     right_press_double:
-      name: Bouton droit - appui double
+      name: Bouton droit - appui double (optionnel)
       description: Action(s) à exécuter lors d'un appui double sur le bouton droit.
       default: []
       selector:
         action:
     right_press_triple:
-      name: Bouton droit - appui triple
+      name: Bouton droit - appui triple (optionnel)
       description: Action(s) à exécuter lors d'un appui triple sur le bouton droit.
       default: []
       selector:
         action:
     right_press_hold:
-      name: Bouton droit - appui maintenu
+      name: Bouton droit - appui maintenu (optionnel)
       description: Action(s) à exécuter lors d'un appui maintenu sur le bouton droit.
       default: []
       selector:
         action: 
     right_press_release:
-      name: Bouton droit - relâchement de l'appui maintenu
+      name: Bouton droit - relâchement de l'appui maintenu (optionnel)
       description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur le bouton droit.
       default: []
       selector:
         action:
     both_press_single:
-      name: Boutons gauche et droit - appui simple
+      name: Boutons gauche et droit - appui simple (optionnel)
       description: Action(s) à exécuter lors d'un appui simple sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_double:
-      name: Boutons gauche et droit - appui double
+      name: Boutons gauche et droit - appui double (optionnel)
       description: Action(s) à exécuter lors d'un appui double sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_triple:
-      name: Boutons gauche et droit - appui triple
+      name: Boutons gauche et droit - appui triple (optionnel)
       description: Action(s) à exécuter lors d'un appui triple sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_hold:
-      name: Boutons gauche et droit - appui maintenu
+      name: Boutons gauche et droit - appui maintenu (optionnel)
       description: Action(s) à exécuter lors d'un appui maintenu sur les 2 boutons.
       default: []
       selector:
         action:
     both_press_release:
-      name: Boutons gauche et droit - relâchement de l'appui maintenu
+      name: Boutons gauche et droit - relâchement de l'appui maintenu (optionnel)
       description: Action(s) à exécuter lors du relâchement d'un appui maintenu sur les 2 boutons.
       default: []
       selector:
@@ -109,11 +110,13 @@ blueprint:
 mode: restart
 max_exceeded: silent
 trigger:
+# Déclencheur pour Zigbee2MQTT
 - platform: state
   entity_id: !input controller_entity
 action:
   - variables:
-      command: '{{ trigger.to_state.attributes.action }}'      
+      command: '{{ trigger.to_state.attributes.action }}' 
+  # Choix de la séquence selon l'évènement reçu
   - choose:
       - conditions: "{{ command == 'button_1_single' }}"
         sequence: !input left_press_single      
