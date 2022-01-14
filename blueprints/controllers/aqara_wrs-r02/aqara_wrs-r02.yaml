@@ -1,0 +1,147 @@
+blueprint:
+  name: Aqara - Interrupteur sans-fil double (WRS-R02)
+  description: |
+    # Aqara - Interrupteur sans-fil double (WRS-R02)
+    
+    Grâce aux automatisations créées avec ce blueprint, il est possible
+    d'exécuter tout type d'actions en utilisant les différents boutons
+    de l'interrupteur.
+    
+    Version 2021.12.7
+  domain: automation
+  input:
+    controller_entity:
+      name: Contrôleur
+      description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
+      selector:
+        entity:
+          domain: sensor
+    left_press_single:
+      name: Gauche - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur l'interrupteur gauche.
+      default: []
+      selector:
+        action:   
+    left_press_double:
+      name: Gauche - appui double
+      description: Action(s) à exécuter lors d'un appui double sur l'interrupteur gauche.
+      default: []
+      selector:
+        action: 
+    left_press_triple:
+      name: Gauche - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur gauche.
+      default: []
+      selector:
+        action:
+    left_press_hold:
+      name: Gauche - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur l'interrupteur gauche.
+      default: []
+      selector:
+        action: {}
+    left_press_release:
+      name: Gauche - relâchement d'appui
+      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur l'interrupteur gauche.
+      default: []
+      selector:
+        action:
+    right_press_single:
+      name: Droit - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur l'interrupteur droit.
+      default: []
+      selector:
+        action: {}
+    right_press_double:
+      name: Droit - appui double
+      description: Action(s) à exécuter lors d'un appui double sur l'interrupteur droit.
+      default: []
+      selector:
+        action:
+    right_press_triple:
+      name: Droit - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur droit.
+      default: []
+      selector:
+        action:
+    right_press_hold:
+      name: Droit - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur l'interrupteur droit.
+      default: []
+      selector:
+        action: {}
+    right_press_release:
+      name: Droit - relâchement d'appui
+      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur l'interrupteur droit.
+      default: []
+      selector:
+        action:
+    both_press_single:
+      name: Les deux - appui simple
+      description: Action(s) à exécuter lors d'un appui simple sur les 2 interrupteurs.
+      default: []
+      selector:
+        action:
+    both_press_double:
+      name: Les deux - appui double
+      description: Action(s) à exécuter lors d'un appui double sur les 2 interrupteurs.
+      default: []
+      selector:
+        action:
+    both_press_triple:
+      name: Les deux - appui triple
+      description: Action(s) à exécuter lors d'un appui triple sur les 2 interrupteurs.
+      default: []
+      selector:
+        action:
+    both_press_hold:
+      name: Les deux - appui maintenu
+      description: Action(s) à exécuter lors d'un appui maintenu sur les 2 interrupteurs.
+      default: []
+      selector:
+        action:
+    both_press_release:
+      name: Les deux - relâchement d'appui
+      description: Action(s) à exécuter lors d'un relâchement d'appui maintenu sur les 2 interrupteurs.
+      default: []
+      selector:
+        action:
+mode: restart
+max_exceeded: silent
+trigger:
+- platform: state
+  entity_id: !input controller_entity
+action:
+  - variables:
+      command: '{{ trigger.to_state.attributes.action }}'      
+  - choose:
+      - conditions: "{{ command == 'button_1_single' }}"
+        sequence: !input left_press_single      
+      - conditions: "{{ command == 'button_1_double' }}"
+        sequence: !input left_press_double     
+      - conditions: "{{ command == 'button_1_triple' }}"
+        sequence: !input left_press_triple    
+      - conditions: "{{ command == 'button_1_hold' }}"
+        sequence: !input left_press_hold
+      - conditions: "{{ command == 'button_1_release' }}"
+        sequence: !input left_press_release
+      - conditions: "{{ command == 'button_2_single' }}"
+        sequence: !input right_press_single
+      - conditions: "{{ command == 'button_2_double' }}"
+        sequence: !input right_press_double
+      - conditions: "{{ command == 'button_2_triple' }}"
+        sequence: !input right_press_triple
+      - conditions: "{{ command == 'button_2_hold' }}"
+        sequence: !input right_press_hold
+      - conditions: "{{ command == 'button_2_release' }}"
+        sequence: !input right_press_release
+      - conditions: "{{ command == 'button_3_single' }}"
+        sequence: !input both_press_single
+      - conditions: "{{ command == 'button_3_double' }}"
+        sequence: !input both_press_double
+      - conditions: "{{ command == 'button_3_triple' }}"
+        sequence: !input both_press_triple
+      - conditions: "{{ command == 'button_3_hold' }}"
+        sequence: !input both_press_hold
+      - conditions: "{{ command == 'button_3_release' }}"
+        sequence: !input both_press_release
