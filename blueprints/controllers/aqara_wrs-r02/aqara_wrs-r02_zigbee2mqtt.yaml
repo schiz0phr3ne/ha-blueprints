@@ -8,7 +8,7 @@ blueprint:
     
     Toutes les actions permises par l'interrupteur sont prises en comptes.
     
-    Version 2021.12.7
+    Version 2022.5.5
   domain: automation
   input:
     controller_entity:
