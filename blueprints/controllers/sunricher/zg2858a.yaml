@@ -11,30 +11,26 @@ blueprint:
         select:
           options:
             - Zigbee2MQTT
-
     controller_entity:
       name: Contrôleur
       description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
       selector:
         entity:
           domain: sensor
-
     light_zone_1:
       name: Zone 1 - Lumière
       description: Lumière controlée en zone 1
       selector:
         device:
           entity:
-            domain: light
-     
+            domain: light    
     light_zone_2:
       name: Zone 2 - Lumière
       description: Lumière controlée en zone 2
       selector:
         device:
           entity:
-            domain: light
-          
+            domain: light         
     light_zone_3:
       name: Zone 3 - Lumière
       description: Lumière controlée en zone 3
@@ -48,6 +44,18 @@ variables:
   integration_id: '{{ integration | lower }}'
   controller_entity: !input controller_entity
   light_zone_1: !input light_zone_1
+  light_zone_2: !input light_zone_2
+  light_zone_3: !input light_zone_3
+  
+  actions_mapping:
+    zigbee2mqtt:
+      color_move_zone_1: [color_move_ep1]
+      color_move_zone_2: [color_move_ep2]
+      color_move_zone_3: [color_move_ep3]
+      
+  color_move_zone_1: '{{ actions_mapping[integration_id]["color_move_zone_1"] }}'
+  color_move_zone_2: '{{ actions_mapping[integration_id]["color_move_zone_2"] }}'
+  color_move_zone_3: '{{ actions_mapping[integration_id]["color_move_zone_3"] }}'
   
 mode: restart
 max_exceeded: silent
@@ -92,3 +100,21 @@ action:
               - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
           target:
             device_id: '{{ light_zone_1 }}'
+      - conditions: '{{ trigger_action | string in "color_move_ep2" }}'
+        sequence:
+          service: light.turn_on
+          data_template:
+            xy_color:
+              - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
+              - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+          target:
+            device_id: '{{ light_zone_2 }}'
+      - conditions: '{{ trigger_action | string in "color_move_ep3" }}'
+        sequence:
+          service: light.turn_on
+          data_template:
+            xy_color:
+              - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
+              - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+          target:
+            device_id: '{{ light_zone_3 }}'
