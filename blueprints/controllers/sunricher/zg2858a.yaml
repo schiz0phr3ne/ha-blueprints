@@ -23,25 +23,29 @@ blueprint:
       name: Zone 1 - Lumière
       description: Lumière controlée en zone 1
       selector:
-        entity:
-          domain: light
+        device:
+          entity:
+            domain: light
      
     light_zone_2:
       name: Zone 2 - Lumière
       description: Lumière controlée en zone 2
       selector:
-        entity:
-          domain: light
+        device:
+          entity:
+            domain: light
           
     light_zone_3:
       name: Zone 3 - Lumière
       description: Lumière controlée en zone 3
       selector:
-        entity:
-          domain: light
+        device:
+          entity:
+            domain: light
           
 variables:
   integration: !input integration
+  integration_id: '{{ integration | lower }}'
   controller_entity: !input controller_entity
   light_zone_1: !input light_zone_1
   
@@ -79,12 +83,12 @@ action:
         {%- endif -%}
   # choose the sequence to run based on the received button event
   - choose:
-      - conditions: '{{ trigger_action | string in color_move_ep1 }}'
+      - conditions: '{{ trigger_action | string in "color_move_ep1" }}'
         sequence:
           service: light.turn_on
           data_template:
             xy_color:
-              - '{{ trigger.to_state.attributes.action_color.x | float }}'
-              - '{{ trigger.to_state.attributes.action_color.y | float }}'
+              - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
+              - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
           target:
-            device_id: '{{ controller_entity }}'
+            device_id: '{{ light_zone_1 }}'
