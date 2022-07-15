@@ -48,6 +48,14 @@ blueprint:
             - label: Valeur
               value: value
           mode: dropdown
+    brightness_step:
+      name: Luminosité - intervalle de réglage (valeur)
+      description: Nombre à ajouter ou soustraire d'une luminosité.
+      selector:
+        number:
+          min: 1
+          max: 255
+          mode: box
     brightness_step_pct:
       name: Luminosité - intervalle de réglage (pourcentage)
       description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
@@ -56,14 +64,6 @@ blueprint:
           min: 1
           max: 100
           unit_of_measurement: '%'
-          mode: box
-    brightness_step:
-      name: Luminosité - intervalle de réglage (valeur)
-      description: Nombre à ajouter ou soustraire d'une luminosité.
-      selector:
-        number:
-          min: 1
-          max: 255
           mode: box
     on_off_as_toggle:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
@@ -87,6 +87,8 @@ variables:
   light_zone_1: !input light_zone_1
   light_zone_2: !input light_zone_2
   light_zone_3: !input light_zone_3
+  brightness_setting_type:: !input brightness_setting_type
+  brightness_step: !input brightness_step
   brightness_step_pct: !input brightness_step_pct
   on_off_as_toggle: !input on_off_as_toggle
   
