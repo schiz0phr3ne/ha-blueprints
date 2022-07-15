@@ -73,6 +73,12 @@ variables:
       color_move_zone_1: [color_move_ep1]
       color_move_zone_2: [color_move_ep2]
       color_move_zone_3: [color_move_ep3]
+      brightness_step_down_zone_1: [brightness_step_down_ep1]
+      brightness_step_down_zone_2: [brightness_step_down_ep2]
+      brightness_step_down_zone_3: [brightness_step_down_ep3]
+      brightness_step_up_zone_1: [brightness_step_up_ep1]
+      brightness_step_up_zone_2: [brightness_step_up_ep2]
+      brightness_step_up_zone_3: [brightness_step_up_ep3]
   
   power_on_zone_1: '{{ actions_mapping[integration_id]["power_on_zone_1"] }}'
   power_on_zone_2: '{{ actions_mapping[integration_id]["power_on_zone_2"] }}'
@@ -83,6 +89,12 @@ variables:
   color_move_zone_1: '{{ actions_mapping[integration_id]["color_move_zone_1"] }}'
   color_move_zone_2: '{{ actions_mapping[integration_id]["color_move_zone_2"] }}'
   color_move_zone_3: '{{ actions_mapping[integration_id]["color_move_zone_3"] }}'
+  brightness_step_down_zone_1: '{{ actions_mapping[integration_id]["brightness_step_down_zone_1"] }}'
+  brightness_step_down_zone_2: '{{ actions_mapping[integration_id]["brightness_step_down_zone_2"] }}'
+  brightness_step_down_zone_3: '{{ actions_mapping[integration_id]["brightness_step_down_zone_3"] }}'
+  brightness_step_up_zone_1: '{{ actions_mapping[integration_id]["brightness_step_up_zone_1"] }}'
+  brightness_step_up_zone_2: '{{ actions_mapping[integration_id]["brightness_step_up_zone_2"] }}'
+  brightness_step_up_zone_3: '{{ actions_mapping[integration_id]["brightness_step_up_zone_3"] }}'
   
 mode: restart
 max_exceeded: silent
@@ -245,5 +257,26 @@ action:
             xy_color:
               - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
               - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+          target:
+            device_id: '{{ light_zone_3 }}'
+      - conditions: '{{ trigger_action | string in brightness_step_down_zone_1 }}'
+        sequence:
+          service: light.turn_on
+          data:
+            brightness_step: -15
+          target:
+            device_id: '{{ light_zone_1 }}'
+      - conditions: '{{ trigger_action | string in brightness_step_down_zone_2 }}'
+        sequence:
+          service: light.turn_on
+          data:
+            brightness_step: -15
+          target:
+            device_id: '{{ light_zone_2 }}'
+      - conditions: '{{ trigger_action | string in brightness_step_down_zone_3 }}'
+        sequence:
+          service: light.turn_on
+          data:
+            brightness_step: -15
           target:
             device_id: '{{ light_zone_3 }}'
