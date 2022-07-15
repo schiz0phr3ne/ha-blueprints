@@ -263,20 +263,20 @@ action:
         sequence:
           service: light.turn_on
           data:
-            brightness_step: -15
+            brightness_step_pct: -5
           target:
             device_id: '{{ light_zone_1 }}'
       - conditions: '{{ trigger_action | string in brightness_step_down_zone_2 }}'
         sequence:
           service: light.turn_on
           data:
-            brightness_step: -15
+            brightness_step_pct: -5
           target:
             device_id: '{{ light_zone_2 }}'
       - conditions: '{{ trigger_action | string in brightness_step_down_zone_3 }}'
         sequence:
           service: light.turn_on
           data:
-            brightness_step: -15
+            brightness_step_pct: -5
           target:
             device_id: '{{ light_zone_3 }}'
