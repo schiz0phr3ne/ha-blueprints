@@ -6,7 +6,7 @@ blueprint:
   input:
     integration:
       name: Intégration
-      description: Intégration Zigbee utilisée pour ce contrôleur.
+      description: Intégration Zigbee utilisée par ce contrôleur.
       selector:
         select:
           options:
@@ -38,6 +38,20 @@ blueprint:
         device:
           entity:
             domain: light
+    on_off_as_toggle:
+      name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
+      description: |
+        La télécommande envoie une commande `on` ou une commande `off`, quelque 
+        soit l'état de l'appareil contrôlé.
+        Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
+        
+        **Exemple :**
+        Une commande `on` en zone 1 sera suivie d'une commande `off` en zone 2 ou 3.
+        La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
+        
+        Il peut être plus judicieux d'interpréter ces commandes en `toggle`.
+      selector:
+        boolean:
           
 variables:
   integration: !input integration
@@ -46,6 +60,7 @@ variables:
   light_zone_1: !input light_zone_1
   light_zone_2: !input light_zone_2
   light_zone_3: !input light_zone_3
+  on_off_as_toggle: !input on_off_as_toggle
   
   actions_mapping:
     zigbee2mqtt:
@@ -91,7 +106,7 @@ action:
         {%- endif -%}
   # choose the sequence to run based on the received button event
   - choose:
-      - conditions: '{{ trigger_action | string in "color_move_ep1" }}'
+      - conditions: '{{ trigger_action | string in color_move_zone_1 }}'
         sequence:
           service: light.turn_on
           data_template:
@@ -100,7 +115,7 @@ action:
               - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
           target:
             device_id: '{{ light_zone_1 }}'
-      - conditions: '{{ trigger_action | string in "color_move_ep2" }}'
+      - conditions: '{{ trigger_action | string in color_move_zone_2 }}'
         sequence:
           service: light.turn_on
           data_template:
@@ -109,7 +124,7 @@ action:
               - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
           target:
             device_id: '{{ light_zone_2 }}'
-      - conditions: '{{ trigger_action | string in "color_move_ep3" }}'
+      - conditions: '{{ trigger_action | string in color_move_zone_3 }}'
         sequence:
           service: light.turn_on
           data_template:
