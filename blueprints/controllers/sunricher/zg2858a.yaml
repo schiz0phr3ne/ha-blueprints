@@ -91,12 +91,21 @@ blueprint:
           mode: box
     brightness_move_max_loop_repeats:
       name: Nombre maximal d'exécution de la boucle de réglage continu de la luminosité
-      descrition: To-do
+      description: To-do
       default: 125
       selector:
         number:
           min: 1
           max: 255
+          mode: box
+    brightness_move_delay_loop_repeats:
+      name: Temps entre chaque exécution de la boucle de réglage continu de la luminosité
+      description: To-do
+      default: 0.05
+      selector:
+        number:
+          min: 0.01
+          max: 1
           mode: box
     on_off_as_toggle:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
@@ -123,6 +132,10 @@ variables:
   brightness_setting_type: !input brightness_setting_type
   brightness_step: !input brightness_step
   brightness_step_pct: !input brightness_step_pct
+  brightness_step_loop: !input brightness_step_loop
+  brightness_step_pct_loop: !input brightness_step_pct_loop
+  brightness_move_max_loop_repeats: !input brightness_move_max_loop_repeats
+  brightness_move_delay_loop_repeats: !input brightness_move_delay_loop_repeats
   on_off_as_toggle: !input on_off_as_toggle
   
   actions_mapping:
