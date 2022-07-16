@@ -106,6 +106,7 @@ blueprint:
         number:
           min: 0.01
           max: 1
+          unit_of_measurement: 'seconde'
           mode: box
     on_off_as_toggle:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
@@ -290,3 +291,25 @@ action:
                 {% else %}
                   {{ light_zone_3 }}
                 {% endif %}
+      - conditions: '{{ trigger_action | string in brightness_move_down }}'
+        sequence:
+          - repeat:
+              while: '{{ repeat.index < brightness_move_max_loop_repeats | int }}'
+              sequence:
+                - service: light.turn_on
+                  data: >
+                    {% if brightness_setting_type == "value" %}
+                      {"brightness_step": {{ ("-" ~ brightness_step_loop|string)|int }}}
+                    {% else %}
+                      {"brightness_step_pct": {{ ("-" ~ brightness_step_pct_loop|string)|int }}}
+                    {% endif %}
+                  target:
+                    device_id: >
+                      {% if trigger_action == "brightness_move_down_ep1" %}
+                        {{ light_zone_1 }}
+                      {% elif trigger_action == "brightness_move_down_ep2" %}
+                        {{ light_zone_2 }}
+                      {% else %}
+                        {{ light_zone_3 }}
+                      {% endif %}
+                - delay: '{{ brightness_move_delay_loop_repeats }}'
