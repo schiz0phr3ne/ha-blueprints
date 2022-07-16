@@ -101,12 +101,14 @@ variables:
       power_on: ['on_ep1', 'on_ep2', 'on_ep3']
       power_off: ['off_ep1', 'off_ep2', 'off_ep3']
       color_move: ['color_move_ep1', 'color_move_ep2', 'color_move_ep3']
+      color_temperature_move: ['color_temperature_move_ep1', 'color_temperature_move_ep2', 'color_temperature_move_ep3']
       brightness_step_down: ['brightness_step_down_ep1', 'brightness_step_down_ep2', 'brightness_step_down_ep3']
       brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
   
   power_on: '{{ actions_mapping[integration_id]["power_on"] }}'
   power_off: '{{ actions_mapping[integration_id]["power_off"] }}'
   color_move: '{{ actions_mapping[integration_id]["color_move"] }}'
+  color_temperature_move: '{{ actions_mapping[integration_id]["color_temperature_move"] }}'
   brightness_step_down: '{{ actions_mapping[integration_id]["brightness_step_down"] }}'
   brightness_step_up: '{{ actions_mapping[integration_id]["brightness_step_up"] }}'
   
@@ -185,6 +187,20 @@ action:
               xy_color:
                 - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
                 - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+            target:
+              device_id: >
+                {% if trigger_action == "color_move_ep1" %}
+                  {{ light_zone_1 }}
+                {% elif trigger_action == "color_move_ep2" %}
+                  {{ light_zone_2 }}
+                {% else %}
+                  {{ light_zone_3 }}
+                {% endif %}
+      - conditions: '{{ trigger_action | string in color_temperature_move }}'
+        sequence:
+          - service: light.turn_on
+            data_template:
+              color_temp: '{{ trigger.event.data.new_state.attributes.action_color_temperature | int }}'
             target:
               device_id: >
                 {% if trigger_action == "color_move_ep1" %}
