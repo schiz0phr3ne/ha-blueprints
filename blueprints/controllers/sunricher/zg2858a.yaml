@@ -52,7 +52,7 @@ blueprint:
               value: percent
           mode: dropdown
     brightness_step:
-      name: Luminosité - intervalle de réglage (valeur)
+      name: Luminosité - intervalle de réglage unitaire (valeur)
       description: Nombre à ajouter ou soustraire d'une luminosité.
       default: 15
       selector:
@@ -61,7 +61,7 @@ blueprint:
           max: 255
           mode: box
     brightness_step_pct:
-      name: Luminosité - intervalle de réglage (pourcentage)
+      name: Luminosité - intervalle de réglage unitaire (pourcentage)
       description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
       default: 5
       selector:
@@ -69,6 +69,34 @@ blueprint:
           min: 1
           max: 100
           unit_of_measurement: '%'
+          mode: box
+    brightness_step_loop:
+      name: Luminosité - intervalle de réglage continu (valeur)
+      description: Nombre à ajouter ou soustraire d'une luminosité.
+      default: 2
+      selector:
+        number:
+          min: 1
+          max: 255
+          mode: box
+    brightness_step_pct_loop:
+      name: Luminosité - intervalle de réglage continu (pourcentage)
+      description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: '%'
+          mode: box
+    brightness_move_max_loop_repeats:
+      name: Nombre maximal d'exécution de la boucle de réglage continu de la luminosité
+      descrition: To-do
+      default: 125
+      selector:
+        number:
+          min: 1
+          max: 255
           mode: box
     on_off_as_toggle:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
@@ -105,6 +133,7 @@ variables:
       color_temperature_move: ['color_temperature_move_ep1', 'color_temperature_move_ep2', 'color_temperature_move_ep3']
       brightness_step_down: ['brightness_step_down_ep1', 'brightness_step_down_ep2', 'brightness_step_down_ep3']
       brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
+      brightness_move_down: ['brightness_move_down_ep1', 'brightness_move_down_ep2', 'brightness_move_down_ep3']
   
   power_on: '{{ actions_mapping[integration]["power_on"] }}'
   power_off: '{{ actions_mapping[integration]["power_off"] }}'
@@ -112,6 +141,7 @@ variables:
   color_temperature_move: '{{ actions_mapping[integration]["color_temperature_move"] }}'
   brightness_step_down: '{{ actions_mapping[integration]["brightness_step_down"] }}'
   brightness_step_up: '{{ actions_mapping[integration]["brightness_step_up"] }}'
+  brightness_move_down: '{{ actions_mapping[integration]["brightness_move_down"] }}'
   
 mode: restart
 max_exceeded: silent
