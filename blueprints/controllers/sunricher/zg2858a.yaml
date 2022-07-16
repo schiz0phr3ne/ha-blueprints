@@ -228,7 +228,7 @@ action:
                   {{ light_zone_2 }}
                 {% else %}
                   {{ light_zone_3 }}
-                {% endif %}            
+                {% endif %}
       - conditions: '{{ trigger_action | string in brightness_step_up }}'
         sequence:
           - service: light.turn_on
