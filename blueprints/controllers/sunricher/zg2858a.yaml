@@ -94,12 +94,8 @@ variables:
   
   actions_mapping:
     zigbee2mqtt:
-      power_on_zone_1: [on_ep1]
-      power_on_zone_2: [on_ep2]
-      power_on_zone_3: [on_ep3]
-      power_off_zone_1: [off_ep1]
-      power_off_zone_2: [off_ep2]
-      power_off_zone_3: [off_ep3]
+      power_on: ['on_ep1', 'on_ep2', 'on_ep3']
+      power_off: ['off_ep1', 'off_ep2', 'off_ep3']
       color_move_zone_1: [color_move_ep1]
       color_move_zone_2: [color_move_ep2]
       color_move_zone_3: [color_move_ep3]
@@ -110,12 +106,8 @@ variables:
       brightness_step_up_zone_2: [brightness_step_up_ep2]
       brightness_step_up_zone_3: [brightness_step_up_ep3]
   
-  power_on_zone_1: '{{ actions_mapping[integration_id]["power_on_zone_1"] }}'
-  power_on_zone_2: '{{ actions_mapping[integration_id]["power_on_zone_2"] }}'
-  power_on_zone_3: '{{ actions_mapping[integration_id]["power_on_zone_3"] }}'
-  power_off_zone_1: '{{ actions_mapping[integration_id]["power_off_zone_1"] }}'
-  power_off_zone_2: '{{ actions_mapping[integration_id]["power_off_zone_2"] }}'
-  power_off_zone_3: '{{ actions_mapping[integration_id]["power_off_zone_3"] }}'
+  power_on: '{{ actions_mapping[integration_id]["power_on"] }}'
+  power_off: '{{ actions_mapping[integration_id]["power_off"] }}'
   color_move_zone_1: '{{ actions_mapping[integration_id]["color_move_zone_1"] }}'
   color_move_zone_2: '{{ actions_mapping[integration_id]["color_move_zone_2"] }}'
   color_move_zone_3: '{{ actions_mapping[integration_id]["color_move_zone_3"] }}'
@@ -160,7 +152,7 @@ action:
         {%- endif -%}
   # choose the sequence to run based on the received button event
   - choose:
-      - conditions: '{{ trigger_action | string in power_on_zone_1 }}'
+      - conditions: '{{ trigger_action | string in power_on }}'
         sequence:
           - choose:
               - conditions:
@@ -169,15 +161,15 @@ action:
                 sequence:
                   service: light.toggle
                   target:
-                    device_id: '{{ light_zone_1 }}'
+                    device_id: '{% if trigger_action == "on_ep1" %}{{ light_zone_1 }}{% elif trigger_action == "on_ep2" %}{{ light_zone_2 }}{% else %}{{ light_zone_3 }}{% endif%}'
               - conditions:
                   - condition: template
                     value_template: '{{ not on_off_as_toggle }}'
                 sequence:
                   service: light.turn_on
                   target:
-                    device_id: '{{ light_zone_1 }}'
-      - conditions: '{{ trigger_action | string in power_on_zone_2 }}'
+                    device_id: '{% if trigger_action == "on_ep1" %}{{ light_zone_1 }}{% elif trigger_action == "on_ep2" %}{{ light_zone_2 }}{% else %}{{ light_zone_3 }}{% endif%}'
+      - conditions: '{{ trigger_action | string in power_off }}'
         sequence:
           - choose:
               - conditions:
@@ -186,82 +178,14 @@ action:
                 sequence:
                   service: light.toggle
                   target:
-                    device_id: '{{ light_zone_2 }}'
-              - conditions:
-                  - condition: template
-                    value_template: '{{ not on_off_as_toggle }}'
-                sequence:
-                  service: light.turn_on
-                  target:
-                    device_id: '{{ light_zone_2 }}'
-      - conditions: '{{ trigger_action | string in power_on_zone_3 }}'
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: template
-                    value_template: '{{ on_off_as_toggle }}'
-                sequence:
-                  service: light.toggle
-                  target:
-                    device_id: '{{ light_zone_3 }}'
-              - conditions:
-                  - condition: template
-                    value_template: '{{ not on_off_as_toggle }}'
-                sequence:
-                  service: light.turn_on
-                  target:
-                    device_id: '{{ light_zone_3 }}'
-      - conditions: '{{ trigger_action | string in power_off_zone_1 }}'
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: template
-                    value_template: '{{ on_off_as_toggle }}'
-                sequence:
-                  service: light.toggle
-                  target:
-                    device_id: '{{ light_zone_1 }}'
+                    device_id: '{% if trigger_action == "off_ep1" %}{{ light_zone_1 }}{% elif trigger_action == "off_ep2" %}{{ light_zone_2 }}{% else %}{{ light_zone_3 }}{% endif%}'
               - conditions:
                   - condition: template
                     value_template: '{{ not on_off_as_toggle }}'
                 sequence:
                   service: light.turn_off
                   target:
-                    device_id: '{{ light_zone_1 }}'
-      - conditions: '{{ trigger_action | string in power_off_zone_2 }}'
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: template
-                    value_template: '{{ on_off_as_toggle }}'
-                sequence:
-                  service: light.toggle
-                  target:
-                    device_id: '{{ light_zone_2 }}'
-              - conditions:
-                  - condition: template
-                    value_template: '{{ not on_off_as_toggle }}'
-                sequence:
-                  service: light.turn_off
-                  target:
-                    device_id: '{{ light_zone_2 }}'
-      - conditions: '{{ trigger_action | string in power_off_zone_3 }}'
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: template
-                    value_template: '{{ on_off_as_toggle }}'
-                sequence:
-                  service: light.toggle
-                  target:
-                    device_id: '{{ light_zone_3 }}'
-              - conditions:
-                  - condition: template
-                    value_template: '{{ not on_off_as_toggle }}'
-                sequence:
-                  service: light.turn_off
-                  target:
-                    device_id: '{{ light_zone_3 }}'
+                    device_id: '{% if trigger_action == "off_ep1" %}{{ light_zone_1 }}{% elif trigger_action == "off_ep2" %}{{ light_zone_2 }}{% else %}{{ light_zone_3 }}{% endif%}'
       - conditions: '{{ trigger_action | string in color_move_zone_1 }}'
         sequence:
           service: light.turn_on
