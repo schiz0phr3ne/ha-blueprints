@@ -43,10 +43,10 @@ blueprint:
       selector:
         select:
           options:
-            - label: Pourcentage
-              value: pct
             - label: Valeur
               value: value
+            - label: Pourcentage
+              value: percent
           mode: dropdown
     brightness_step:
       name: Luminosité - intervalle de réglage (valeur)
@@ -299,6 +299,13 @@ action:
                     brightness_step: '{{ ("-" ~ brightness_step|string)|int }}'
                   target:
                     device_id: '{{ light_zone_1 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ ("-" ~ brightness_step_pct|string)|int }}'
+                  target:
+                    device_id: '{{ light_zone_1 }}'
       - conditions: '{{ trigger_action | string in brightness_step_down_zone_2 }}'
         sequence:
           - choose:
@@ -308,7 +315,14 @@ action:
                   data:
                     brightness_step: '{{ ("-" ~ brightness_step|string)|int }}'
                   target:
-                    device_id: '{{ light_zone_1 }}'
+                    device_id: '{{ light_zone_2 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ ("-" ~ brightness_step_pct|string)|int }}'
+                  target:
+                    device_id: '{{ light_zone_2 }}'
       - conditions: '{{ trigger_action | string in brightness_step_down_zone_3 }}'
         sequence:
           - choose:
@@ -317,6 +331,13 @@ action:
                   service: light.turn_on
                   data:
                     brightness_step: '{{ ("-" ~ brightness_step|string)|int }}'
+                  target:
+                    device_id: '{{ light_zone_3 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ ("-" ~ brightness_step_pct|string)|int }}'
                   target:
                     device_id: '{{ light_zone_3 }}'
       - conditions: '{{ trigger_action | string in brightness_step_up_zone_1 }}'
