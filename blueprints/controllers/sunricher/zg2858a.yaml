@@ -40,6 +40,7 @@ blueprint:
             domain: light
     brightness_setting_type:
       name: Luminosité - type de réglage
+      default: Valeur
       selector:
         select:
           options:
@@ -51,6 +52,7 @@ blueprint:
     brightness_step:
       name: Luminosité - intervalle de réglage (valeur)
       description: Nombre à ajouter ou soustraire d'une luminosité.
+      default: 15
       selector:
         number:
           min: 1
@@ -59,6 +61,7 @@ blueprint:
     brightness_step_pct:
       name: Luminosité - intervalle de réglage (pourcentage)
       description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
+      default: 5
       selector:
         number:
           min: 1
@@ -77,6 +80,7 @@ blueprint:
         La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
         
         Il peut être plus judicieux d'interpréter ces commandes en `toggle`.
+      default: True
       selector:
         boolean:
           
@@ -98,17 +102,13 @@ variables:
       power_off: ['off_ep1', 'off_ep2', 'off_ep3']
       color_move: ['color_move_ep1', 'color_move_ep2', 'color_move_ep3']
       brightness_step_down: ['brightness_step_down_ep1', 'brightness_step_down_ep2', 'brightness_step_down_ep3']
-      brightness_step_up_zone_1: [brightness_step_up_ep1]
-      brightness_step_up_zone_2: [brightness_step_up_ep2]
-      brightness_step_up_zone_3: [brightness_step_up_ep3]
+      brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
   
   power_on: '{{ actions_mapping[integration_id]["power_on"] }}'
   power_off: '{{ actions_mapping[integration_id]["power_off"] }}'
   color_move: '{{ actions_mapping[integration_id]["color_move"] }}'
   brightness_step_down: '{{ actions_mapping[integration_id]["brightness_step_down"] }}'
-  brightness_step_up_zone_1: '{{ actions_mapping[integration_id]["brightness_step_up_zone_1"] }}'
-  brightness_step_up_zone_2: '{{ actions_mapping[integration_id]["brightness_step_up_zone_2"] }}'
-  brightness_step_up_zone_3: '{{ actions_mapping[integration_id]["brightness_step_up_zone_3"] }}'
+  brightness_step_up: '{{ actions_mapping[integration_id]["brightness_step_up"] }}'
   
 mode: restart
 max_exceeded: silent
@@ -211,55 +211,22 @@ action:
                   {{ light_zone_2 }}
                 {% else %}
                   {{ light_zone_3 }}
+                {% endif %}            
+      - conditions: '{{ trigger_action | string in brightness_step_up }}'
+        sequence:
+          - service: light.turn_on
+            data: >
+              {% if brightness_setting_type == "value" %}
+                {"brightness_step": {{ brightness_step }}}
+              {% else %}
+                {"brightness_step_pct": {{ brightness_step_pct }}}
+              {% endif %}
+            target:
+              device_id: >
+                {% if trigger_action == "brightness_step_up_ep1" %}
+                  {{ light_zone_1 }}
+                {% elif trigger_action == "brightness_step_up_ep2" %}
+                  {{ light_zone_2 }}
+                {% else %}
+                  {{ light_zone_3 }}
                 {% endif %}
-      - conditions: '{{ trigger_action | string in brightness_step_up_zone_1 }}'
-        sequence:
-          - choose:
-              - conditions: '{{ brightness_setting_type == "value" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step: '{{ brightness_step }}'
-                  target:
-                    device_id: '{{ light_zone_1 }}'
-              - conditions: '{{ brightness_setting_type == "percent" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step_pct: '{{ brightness_step_pct }}'
-                  target:
-                    device_id: '{{ light_zone_1 }}'
-      - conditions: '{{ trigger_action | string in brightness_step_up_zone_2 }}'
-        sequence:
-          - choose:
-              - conditions: '{{ brightness_setting_type == "value" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step: '{{ brightness_step }}'
-                  target:
-                    device_id: '{{ light_zone_2 }}'
-              - conditions: '{{ brightness_setting_type == "percent" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step_pct: '{{ brightness_step_pct }}'
-                  target:
-                    device_id: '{{ light_zone_2 }}'
-      - conditions: '{{ trigger_action | string in brightness_step_up_zone_3 }}'
-        sequence:
-          - choose:
-              - conditions: '{{ brightness_setting_type == "value" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step: '{{ brightness_step }}'
-                  target:
-                    device_id: '{{ light_zone_3 }}'
-              - conditions: '{{ brightness_setting_type == "percent" }}'
-                sequence:
-                  service: light.turn_on
-                  data:
-                    brightness_step_pct: '{{ brightness_step_pct }}'
-                  target:
-                    device_id: '{{ light_zone_3 }}'
