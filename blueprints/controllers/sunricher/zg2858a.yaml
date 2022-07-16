@@ -342,22 +342,52 @@ action:
                     device_id: '{{ light_zone_3 }}'
       - conditions: '{{ trigger_action | string in brightness_step_up_zone_1 }}'
         sequence:
-          service: light.turn_on
-          data:
-            brightness_step_pct: '{{ brightness_step_pct }}'
-          target:
-            device_id: '{{ light_zone_1 }}'
+          - choose:
+              - conditions: '{{ brightness_setting_type == "value" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step: '{{ brightness_step }}'
+                  target:
+                    device_id: '{{ light_zone_1 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ brightness_step_pct }}'
+                  target:
+                    device_id: '{{ light_zone_1 }}'
       - conditions: '{{ trigger_action | string in brightness_step_up_zone_2 }}'
         sequence:
-          service: light.turn_on
-          data:
-            brightness_step_pct: '{{ brightness_step_pct }}'
-          target:
-            device_id: '{{ light_zone_2 }}'
-      - conditions: '{{ trigger_action | string in brightness_step_up_zone_2 }}'
+          - choose:
+              - conditions: '{{ brightness_setting_type == "value" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step: '{{ brightness_step }}'
+                  target:
+                    device_id: '{{ light_zone_2 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ brightness_step_pct }}'
+                  target:
+                    device_id: '{{ light_zone_2 }}'
+      - conditions: '{{ trigger_action | string in brightness_step_up_zone_3 }}'
         sequence:
-          service: light.turn_on
-          data:
-            brightness_step_pct: '{{ brightness_step_pct }}'
-          target:
-            device_id: '{{ light_zone_2 }}'
+          - choose:
+              - conditions: '{{ brightness_setting_type == "value" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step: '{{ brightness_step }}'
+                  target:
+                    device_id: '{{ light_zone_3 }}'
+              - conditions: '{{ brightness_setting_type == "percent" }}'
+                sequence:
+                  service: light.turn_on
+                  data:
+                    brightness_step_pct: '{{ brightness_step_pct }}'
+                  target:
+                    device_id: '{{ light_zone_3 }}'
