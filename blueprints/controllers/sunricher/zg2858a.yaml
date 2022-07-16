@@ -10,7 +10,9 @@ blueprint:
       selector:
         select:
           options:
-            - Zigbee2MQTT
+            - label: Zigbee2MQTT
+              value: zigbee2mqtt
+          mode: dropdown
     controller_entity:
       name: Contrôleur
       description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
@@ -86,7 +88,6 @@ blueprint:
           
 variables:
   integration: !input integration
-  integration_id: '{{ integration | lower }}'
   controller_entity: !input controller_entity
   light_zone_1: !input light_zone_1
   light_zone_2: !input light_zone_2
@@ -105,12 +106,12 @@ variables:
       brightness_step_down: ['brightness_step_down_ep1', 'brightness_step_down_ep2', 'brightness_step_down_ep3']
       brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
   
-  power_on: '{{ actions_mapping[integration_id]["power_on"] }}'
-  power_off: '{{ actions_mapping[integration_id]["power_off"] }}'
-  color_move: '{{ actions_mapping[integration_id]["color_move"] }}'
-  color_temperature_move: '{{ actions_mapping[integration_id]["color_temperature_move"] }}'
-  brightness_step_down: '{{ actions_mapping[integration_id]["brightness_step_down"] }}'
-  brightness_step_up: '{{ actions_mapping[integration_id]["brightness_step_up"] }}'
+  power_on: '{{ actions_mapping[integration]["power_on"] }}'
+  power_off: '{{ actions_mapping[integration]["power_off"] }}'
+  color_move: '{{ actions_mapping[integration]["color_move"] }}'
+  color_temperature_move: '{{ actions_mapping[integration]["color_temperature_move"] }}'
+  brightness_step_down: '{{ actions_mapping[integration]["brightness_step_down"] }}'
+  brightness_step_up: '{{ actions_mapping[integration]["brightness_step_up"] }}'
   
 mode: restart
 max_exceeded: silent
@@ -127,21 +128,21 @@ condition:
       # check that the button event is not empty
       - >-
         {%- set trigger_action -%}
-          {%- if integration_id == "zigbee2mqtt" -%}
+          {%- if integration == "zigbee2mqtt" -%}
             {{ trigger.event.data.new_state.state }}
           {%- endif -%}
         {%- endset -%}
         {{ trigger_action not in ["","None"] }}
       # only for zigbee2mqtt, check if the event is relative to a real state change, and not only some minor changes in the sensor attributes
       # this is required since multiple state_changed events are fired for a single button press, with the result of the automation being triggered multiple times
-      - '{{ integration_id != "zigbee2mqtt" or trigger.event.data.new_state.state != trigger.event.data.old_state.state }}'
+      - '{{ integration != "zigbee2mqtt" or trigger.event.data.new_state.state != trigger.event.data.old_state.state }}'
       
 action:
   # extract button event from the trigger
   # provide a single string value to check against
   - variables:
       trigger_action: >-
-        {%- if integration_id == "zigbee2mqtt" -%}
+        {%- if integration == "zigbee2mqtt" -%}
           {{ trigger.event.data.new_state.state }}
         {%- endif -%}
   # choose the sequence to run based on the received button event
