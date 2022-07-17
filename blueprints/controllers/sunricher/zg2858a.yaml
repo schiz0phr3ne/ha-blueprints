@@ -255,6 +255,7 @@ variables:
       brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
       brightness_move_down: ['brightness_move_down_ep1', 'brightness_move_down_ep2', 'brightness_move_down_ep3']
       brightness_move_up: ['brightness_move_up_ep1', 'brightness_move_up_ep2', 'brightness_move_up_ep3']
+      scenarios: ['recall_1_ep1', 'recall_2_ep1', 'recall_3_ep1', 'recall_4_ep1', 'recall_5_ep1', 'recall_1_ep2', 'recall_2_ep2', 'recall_3_ep2', 'recall_4_ep2', 'recall_5_ep2', 'recall_1_ep3', 'recall_2_ep3', 'recall_3_ep3', 'recall_4_ep3', 'recall_5_ep3']
   
   power_on: '{{ actions_mapping[integration]["power_on"] }}'
   power_off: '{{ actions_mapping[integration]["power_off"] }}'
@@ -264,6 +265,7 @@ variables:
   brightness_step_up: '{{ actions_mapping[integration]["brightness_step_up"] }}'
   brightness_move_down: '{{ actions_mapping[integration]["brightness_move_down"] }}'
   brightness_move_up: '{{ actions_mapping[integration]["brightness_move_up"] }}'
+  scenarios: '{{ actions_mapping[integration]["scenarios"] }}'
   
 mode: restart
 max_exceeded: silent
