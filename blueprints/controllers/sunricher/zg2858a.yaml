@@ -221,14 +221,7 @@ action:
                 light.turn_off
               {% endif %}
             target:
-              device_id: >
-                {% if trigger_action == "off_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "off_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in color_move }}'
         sequence:
           - service: light.turn_on
@@ -237,28 +230,14 @@ action:
                 - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
                 - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
             target:
-              device_id: >
-                {% if trigger_action == "color_move_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "color_move_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in color_temperature_move }}'
         sequence:
           - service: light.turn_on
             data_template:
               color_temp: '{{ trigger.event.data.new_state.attributes.action_color_temperature | int }}'
             target:
-              device_id: >
-                {% if trigger_action == "color_move_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "color_move_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in brightness_step_down }}'
         sequence:
           - service: light.turn_on
@@ -269,14 +248,7 @@ action:
                 {"brightness_step_pct": {{ ("-" ~ brightness_step_pct|string)|int }}}
               {% endif %}
             target:
-              device_id: >
-                {% if trigger_action == "brightness_step_down_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "brightness_step_down_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in brightness_step_up }}'
         sequence:
           - service: light.turn_on
@@ -287,14 +259,7 @@ action:
                 {"brightness_step_pct": {{ brightness_step_pct }}}
               {% endif %}
             target:
-              device_id: >
-                {% if trigger_action == "brightness_step_up_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "brightness_step_up_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in brightness_move_down }}'
         sequence:
           - repeat:
@@ -308,14 +273,7 @@ action:
                       {"brightness_step_pct": {{ ("-" ~ brightness_step_pct_loop|string)|int }}}
                     {% endif %}
                   target:
-                    device_id: >
-                      {% if trigger_action == "brightness_move_down_ep1" %}
-                        {{ light_zone_1 }}
-                      {% elif trigger_action == "brightness_move_down_ep2" %}
-                        {{ light_zone_2 }}
-                      {% else %}
-                        {{ light_zone_3 }}
-                      {% endif %}
+                    device_id: '{{ entity }}'
                 - delay: '{{ brightness_move_delay_loop_repeats }}'
       - conditions: '{{ trigger_action | string in brightness_move_up }}'
         sequence:
@@ -330,12 +288,5 @@ action:
                       {"brightness_step_pct": {{ brightness_step_pct_loop }}}
                     {% endif %}
                   target:
-                    device_id: >
-                      {% if trigger_action == "brightness_move_up_ep1" %}
-                        {{ light_zone_1 }}
-                      {% elif trigger_action == "brightness_move_up_ep2" %}
-                        {{ light_zone_2 }}
-                      {% else %}
-                        {{ light_zone_3 }}
-                      {% endif %}
+                    device_id: '{{ entity }}'
                 - delay: '{{ brightness_move_delay_loop_repeats }}'
