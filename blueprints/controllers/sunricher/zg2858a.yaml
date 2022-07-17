@@ -25,14 +25,74 @@ blueprint:
       selector:
         device:
           entity:
-            domain: light    
+            domain: light
+    scenario_1_zone_1:
+      name: Zone 1 - Scénario 1
+      description: Scénario 1 en zone 1
+      default: []
+      selector:
+        action:
+    scenario_2_zone_1:
+      name: Zone 1 - Scénario 2
+      description: Scénario 2 en zone 1
+      default: []
+      selector:
+        action:
+    scenario_3_zone_1:
+      name: Zone 1 - Scénario 3
+      description: Scénario 3 en zone 1
+      default: []
+      selector:
+        action:
+    scenario_4_zone_1:
+      name: Zone 1 - Scénario 4
+      description: Scénario 4 en zone 1
+      default: []
+      selector:
+        action:
+    scenario_5_zone_1:
+      name: Zone 1 - Scénario 5
+      description: Scénario 5 en zone 1
+      default: []
+      selector:
+        action:
     light_zone_2:
       name: Zone 2 - Lumière
       description: Lumière controlée en zone 2
       selector:
         device:
           entity:
-            domain: light         
+            domain: light
+    scenario_1_zone_2:
+      name: Zone 2 - Scénario 1
+      description: Scénario 1 en zone 2
+      default: []
+      selector:
+        action:
+    scenario_2_zone_2:
+      name: Zone 2 - Scénario 2
+      description: Scénario 2 en zone 2
+      default: []
+      selector:
+        action:
+    scenario_3_zone_2:
+      name: Zone 2 - Scénario 3
+      description: Scénario 3 en zone 2
+      default: []
+      selector:
+        action:
+    scenario_4_zone_2:
+      name: Zone 2 - Scénario 4
+      description: Scénario 4 en zone 2
+      default: []
+      selector:
+        action:
+    scenario_5_zone_2:
+      name: Zone 2 - Scénario 5
+      description: Scénario 5 en zone 2
+      default: []
+      selector:
+        action:
     light_zone_3:
       name: Zone 3 - Lumière
       description: Lumière controlée en zone 3
@@ -40,6 +100,36 @@ blueprint:
         device:
           entity:
             domain: light
+    scenario_1_zone_3:
+      name: Zone 3 - Scénario 1
+      description: Scénario 1 en zone 3
+      default: []
+      selector:
+        action:
+    scenario_2_zone_3:
+      name: Zone 3 - Scénario 2
+      description: Scénario 2 en zone 3
+      default: []
+      selector:
+        action:
+    scenario_3_zone_3:
+      name: Zone 3 - Scénario 3
+      description: Scénario 3 en zone 3
+      default: []
+      selector:
+        action:
+    scenario_4_zone_3:
+      name: Zone 3 - Scénario 4
+      description: Scénario 4 en zone 3
+      default: []
+      selector:
+        action:
+    scenario_5_zone_3:
+      name: Zone 3 - Scénario 5
+      description: Scénario 5 en zone 3
+      default: []
+      selector:
+        action:
     brightness_setting_type:
       name: Luminosité - type de réglage
       default: Valeur
@@ -112,7 +202,7 @@ blueprint:
     on_off_as_toggle:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
       description: |
-        La télécommande envoie une commande `on` ou une commande `off`, quelque 
+        La télécommande envoie une commande `on` ou une commande `off`, quelque
         soit l'état de l'appareil contrôlé, lors d'appuis sur le bouton d'alimentation.
         Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
         
@@ -150,6 +240,7 @@ variables:
       brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
       brightness_move_down: ['brightness_move_down_ep1', 'brightness_move_down_ep2', 'brightness_move_down_ep3']
       brightness_move_up: ['brightness_move_up_ep1', 'brightness_move_up_ep2', 'brightness_move_up_ep3']
+      scenarios: ['recall_1_ep1', 'recall_2_ep1', 'recall_3_ep1', 'recall_4_ep1', 'recall_5_ep1', 'recall_1_ep2', 'recall_2_ep2', 'recall_3_ep2', 'recall_4_ep2', 'recall_5_ep2', 'recall_1_ep3', 'recall_2_ep3', 'recall_3_ep3', 'recall_4_ep3', 'recall_5_ep3']
   
   power_on: '{{ actions_mapping[integration]["power_on"] }}'
   power_off: '{{ actions_mapping[integration]["power_off"] }}'
@@ -159,6 +250,7 @@ variables:
   brightness_step_up: '{{ actions_mapping[integration]["brightness_step_up"] }}'
   brightness_move_down: '{{ actions_mapping[integration]["brightness_move_down"] }}'
   brightness_move_up: '{{ actions_mapping[integration]["brightness_move_up"] }}'
+  scenarios: '{{ actions_mapping[integration]["scenarios"] }}'
   
 mode: restart
 max_exceeded: silent
@@ -173,12 +265,16 @@ condition:
   - condition: and
     conditions:
       # check that the button event is not empty
-      - >-
-        {%- set trigger_action -%}
-          {%- if integration == "zigbee2mqtt" -%}
+      - >
+        {% set trigger_action %}
+          {% if integration == "zigbee2mqtt" %}
             {{ trigger.event.data.new_state.state }}
-          {%- endif -%}
-        {%- endset -%}
+          {% elif integration_id == "deconz" %}
+            {{ trigger.event.data.event }}
+          {% elif integration_id == "zha" %}
+            {{ trigger.event.data.command }}{{"_" if trigger.event.data.args|length > 0}}{{ trigger.event.data.args|join("_") }}
+          {% endif %}
+        {% endset %}
         {{ trigger_action not in ["","None"] }}
       # only for zigbee2mqtt, check if the event is relative to a real state change, and not only some minor changes in the sensor attributes
       # this is required since multiple state_changed events are fired for a single button press, with the result of the automation being triggered multiple times
@@ -290,3 +386,81 @@ action:
                   target:
                     device_id: '{{ entity }}'
                 - delay: '{{ brightness_move_delay_loop_repeats }}'
+      - conditions: '{{ trigger_action | string in scenarios }}'
+        sequence:
+          - choose:
+              - conditions: '{{ trigger_action | string == "recall_1_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_1
+              - conditions: '{{ trigger_action | string == "recall_2_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_1
+              - conditions: '{{ trigger_action | string == "recall_3_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_1
+              - conditions: '{{ trigger_action | string == "recall_4_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_1
+              - conditions: '{{ trigger_action | string == "recall_5_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_1
+              - conditions: '{{ trigger_action | string == "recall_1_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_2
+              - conditions: '{{ trigger_action | string == "recall_2_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_2
+              - conditions: '{{ trigger_action | string == "recall_3_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_2
+              - conditions: '{{ trigger_action | string == "recall_4_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_2
+              - conditions: '{{ trigger_action | string == "recall_5_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_2
+              - conditions: '{{ trigger_action | string == "recall_1_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_3
+              - conditions: '{{ trigger_action | string == "recall_2_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_3
+              - conditions: '{{ trigger_action | string == "recall_3_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_3
+              - conditions: '{{ trigger_action | string == "recall_4_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_3
+              - conditions: '{{ trigger_action | string == "recall_5_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_3
