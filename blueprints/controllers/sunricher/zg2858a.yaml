@@ -90,7 +90,7 @@ blueprint:
           unit_of_measurement: '%'
           mode: box
     brightness_move_max_loop_repeats:
-      name: Nombre maximal d'exécution de la boucle de réglage continu de la luminosité
+      name: Nombre maximal d'exécutions de la boucle de réglage continu de la luminosité
       description: To-do
       default: 125
       selector:
