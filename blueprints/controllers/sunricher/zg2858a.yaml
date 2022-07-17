@@ -113,7 +113,7 @@ blueprint:
       name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
       description: |
         La télécommande envoie une commande `on` ou une commande `off`, quelque 
-        soit l'état de l'appareil contrôlé.
+        soit l'état de l'appareil contrôlé, lors d'appuis sur le bouton d'alimentation.
         Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
         
         **Exemple :**
