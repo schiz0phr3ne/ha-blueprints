@@ -192,6 +192,14 @@ action:
         {%- if integration == "zigbee2mqtt" -%}
           {{ trigger.event.data.new_state.state }}
         {%- endif -%}
+      entity: >
+        {% if "ep1" in trigger_action %}
+          {{ light_zone_1 }}
+        {% elif "ep2" in trigger_action %}
+          {{ light_zone_2 }}
+        {% elif "ep3" in trigger_action %}
+          {{ light_zone_3 }}
+        {% endif %}
   # choose the sequence to run based on the received button event
   - choose:
       - conditions: '{{ trigger_action | string in power_on }}'
@@ -203,14 +211,7 @@ action:
                 light.turn_on
               {% endif %}
             target:
-              device_id: >
-                {% if trigger_action == "on_ep1" %}
-                  {{ light_zone_1 }}
-                {% elif trigger_action == "on_ep2" %}
-                  {{ light_zone_2 }}
-                {% else %}
-                  {{ light_zone_3 }}
-                {% endif %}
+              device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in power_off }}'
         sequence:
           - service: >
