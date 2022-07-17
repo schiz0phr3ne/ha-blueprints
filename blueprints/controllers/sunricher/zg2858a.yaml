@@ -219,23 +219,8 @@ variables:
   integration: !input integration
   controller_entity: !input controller_entity
   light_zone_1: !input light_zone_1
-  scenario_1_zone_1: !input scenario_1_zone_1
-  scenario_2_zone_1: !input scenario_2_zone_1
-  scenario_3_zone_1: !input scenario_3_zone_1
-  scenario_4_zone_1: !input scenario_4_zone_1
-  scenario_5_zone_1: !input scenario_5_zone_1
   light_zone_2: !input light_zone_2
-  scenario_1_zone_2: !input scenario_1_zone_2
-  scenario_2_zone_2: !input scenario_2_zone_2
-  scenario_3_zone_2: !input scenario_3_zone_2
-  scenario_4_zone_2: !input scenario_4_zone_2
-  scenario_5_zone_2: !input scenario_5_zone_2
   light_zone_3: !input light_zone_3
-  scenario_1_zone_3: !input scenario_1_zone_3
-  scenario_2_zone_3: !input scenario_2_zone_3
-  scenario_3_zone_3: !input scenario_3_zone_3
-  scenario_4_zone_3: !input scenario_4_zone_3
-  scenario_5_zone_3: !input scenario_5_zone_3
   brightness_setting_type: !input brightness_setting_type
   brightness_step: !input brightness_step
   brightness_step_pct: !input brightness_step_pct
@@ -401,3 +386,81 @@ action:
                   target:
                     device_id: '{{ entity }}'
                 - delay: '{{ brightness_move_delay_loop_repeats }}'
+      - conditions: '{{ trigger_action | string in scenarios }}'
+        sequence:
+          - choose:
+              - conditions: '{{ trigger_action | string == "recall_1_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_1
+              - conditions: '{{ trigger_action | string == "recall_2_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_1
+              - conditions: '{{ trigger_action | string == "recall_3_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_1
+              - conditions: '{{ trigger_action | string == "recall_4_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_1
+              - conditions: '{{ trigger_action | string == "recall_5_ep1" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_1
+              - conditions: '{{ trigger_action | string == "recall_1_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_2
+              - conditions: '{{ trigger_action | string == "recall_2_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_2
+              - conditions: '{{ trigger_action | string == "recall_3_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_2
+              - conditions: '{{ trigger_action | string == "recall_4_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_2
+              - conditions: '{{ trigger_action | string == "recall_5_ep2" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_2
+              - conditions: '{{ trigger_action | string == "recall_1_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_1_zone_3
+              - conditions: '{{ trigger_action | string == "recall_2_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_2_zone_3
+              - conditions: '{{ trigger_action | string == "recall_3_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_3_zone_3
+              - conditions: '{{ trigger_action | string == "recall_4_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_4_zone_3
+              - conditions: '{{ trigger_action | string == "recall_5_ep3" }}'
+                sequence:
+                  - choose:
+                      - conditions: []
+                        sequence: !input scenario_5_zone_3
