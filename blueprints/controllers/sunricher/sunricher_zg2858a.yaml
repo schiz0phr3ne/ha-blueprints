@@ -6,7 +6,8 @@ blueprint:
   input:
     integration:
       name: Intégration
-      description: Intégration Zigbee utilisée par ce contrôleur.
+      description: |
+        Intégration Zigbee utilisée par ce contrôleur.
       selector:
         select:
           options:
@@ -15,135 +16,175 @@ blueprint:
           mode: dropdown
     controller_entity:
       name: Contrôleur
-      description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
+      description: |
+        Capteur d'action du contrôleur à utiliser pour l'automatisation.
       selector:
         entity:
           domain: sensor
     light_zone_1:
       name: Zone 1 - Lumière
-      description: Lumière controlée en zone 1
+      description: |
+        Lumière controlée en zone 1.
       selector:
         device:
           entity:
             domain: light
     scenario_1_zone_1:
       name: Zone 1 - Scénario 1
-      description: Scénario 1 en zone 1
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_2_zone_1:
       name: Zone 1 - Scénario 2
-      description: Scénario 2 en zone 1
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_3_zone_1:
       name: Zone 1 - Scénario 3
-      description: Scénario 3 en zone 1
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_4_zone_1:
       name: Zone 1 - Scénario 4
-      description: Scénario 4 en zone 1
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_5_zone_1:
       name: Zone 1 - Scénario 5
-      description: Scénario 5 en zone 1
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     light_zone_2:
       name: Zone 2 - Lumière
-      description: Lumière controlée en zone 2
+      description: |
+        Lumière controlée en zone 2.
       selector:
         device:
           entity:
             domain: light
     scenario_1_zone_2:
       name: Zone 2 - Scénario 1
-      description: Scénario 1 en zone 2
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_2_zone_2:
       name: Zone 2 - Scénario 2
-      description: Scénario 2 en zone 2
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_3_zone_2:
       name: Zone 2 - Scénario 3
-      description: Scénario 3 en zone 2
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_4_zone_2:
       name: Zone 2 - Scénario 4
-      description: Scénario 4 en zone 2
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_5_zone_2:
       name: Zone 2 - Scénario 5
-      description: Scénario 5 en zone 2
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     light_zone_3:
       name: Zone 3 - Lumière
-      description: Lumière controlée en zone 3
+      description: |
+        Lumière controlée en zone 3.
       selector:
         device:
           entity:
             domain: light
     scenario_1_zone_3:
       name: Zone 3 - Scénario 1
-      description: Scénario 1 en zone 3
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_2_zone_3:
       name: Zone 3 - Scénario 2
-      description: Scénario 2 en zone 3
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_3_zone_3:
       name: Zone 3 - Scénario 3
-      description: Scénario 3 en zone 3
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_4_zone_3:
       name: Zone 3 - Scénario 4
-      description: Scénario 4 en zone 3
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     scenario_5_zone_3:
       name: Zone 3 - Scénario 5
-      description: Scénario 5 en zone 3
+      description: |
+        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
         action:
     brightness_setting_type:
       name: Luminosité - type de réglage
-      default: Valeur
+      description: |
+        La luminosité peut être réglée en valeur numérique (de 0 à 255), ou en pourcentage (de 0 à 100%).
+        Le réglage en valeur numérique permet plus de granularité, tandis que le réglage en pourcentage est plus aisé à comprendre.
+        
+        S'applique pour toutes les lumières.
+      default: value
       selector:
         select:
           options:
-            - label: Valeur
+            - label: Valeur numérique
               value: value
             - label: Pourcentage
               value: percent
           mode: dropdown
     brightness_step:
       name: Luminosité - intervalle de réglage unitaire (valeur)
-      description: Nombre à ajouter ou soustraire d'une luminosité.
+      description: |
+        Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
       default: 15
       selector:
         number:
@@ -152,7 +193,8 @@ blueprint:
           mode: box
     brightness_step_pct:
       name: Luminosité - intervalle de réglage unitaire (pourcentage)
-      description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
+      description: |
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
       default: 5
       selector:
         number:
@@ -162,7 +204,8 @@ blueprint:
           mode: box
     brightness_step_loop:
       name: Luminosité - intervalle de réglage continu (valeur)
-      description: Nombre à ajouter ou soustraire d'une luminosité.
+      description: |
+        Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité lors d'appuis longs sur les boutons de réglage de la luminosité.
       default: 2
       selector:
         number:
@@ -171,7 +214,8 @@ blueprint:
           mode: box
     brightness_step_pct_loop:
       name: Luminosité - intervalle de réglage continu (pourcentage)
-      description: Nombre de pourcents à ajouter ou soustraire d'une luminosité.
+      description: |
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité lors d'appuis longs sur les boutons de réglage de la luminosité.
       default: 1
       selector:
         number:
@@ -180,8 +224,9 @@ blueprint:
           unit_of_measurement: '%'
           mode: box
     brightness_move_max_loop_repeats:
-      name: Nombre maximal d'exécutions de la boucle de réglage continu de la luminosité
-      description: To-do
+      name: Nombre maximal d'exécutions de la boucle de réglage continu de la luminosité.
+      description: |
+        To-do
       default: 125
       selector:
         number:
@@ -189,8 +234,10 @@ blueprint:
           max: 255
           mode: box
     brightness_move_delay_loop_repeats:
-      name: Temps entre chaque exécution de la boucle de réglage continu de la luminosité
-      description: To-do
+      name: |
+        Temps entre chaque exécution de la boucle de réglage continu de la luminosité.
+      description: |
+        To-do
       default: 0.05
       selector:
         number:
