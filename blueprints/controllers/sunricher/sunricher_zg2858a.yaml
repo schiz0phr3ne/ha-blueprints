@@ -1,6 +1,7 @@
 blueprint:
   name: Sunricher - Télécommande RGBCCT 3 canaux
-  description: To-do
+  description: |
+    ![Image](https://raw.githubusercontent.com/schiz0phr3ne/ha-blueprints/main/images/sunricher/sunricher_zg2858a/sunricher_zg2858a.png)
   domain: automation
   
   input:
