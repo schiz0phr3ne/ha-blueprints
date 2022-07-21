@@ -184,7 +184,10 @@ blueprint:
     brightness_step:
       name: Luminosité - intervalle de réglage unitaire (valeur)
       description: |
-        Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité (minimum : 1 ; maximum : 255).
+        Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
+        
+        **Minimum :** 1
+        **Maximum :** 255
       default: 15
       selector:
         number:
@@ -194,7 +197,10 @@ blueprint:
     brightness_step_pct:
       name: Luminosité - intervalle de réglage unitaire (pourcentage)
       description: |
-        Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité (minimum : 1% ; maximum : 100%).
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
+        
+        **Minimum :** 1%
+        **Maximum :** 100%
       default: 5
       selector:
         number:
@@ -205,7 +211,10 @@ blueprint:
     brightness_step_loop:
       name: Luminosité - intervalle de réglage continu (valeur)
       description: |
-        Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité (minimum : 1 ; maximum : 255).
+        Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité.
+        
+        **Minimum :** 1
+        **Maximum :** 255
       default: 2
       selector:
         number:
@@ -215,7 +224,10 @@ blueprint:
     brightness_step_pct_loop:
       name: Luminosité - intervalle de réglage continu (pourcentage)
       description: |
-        Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité (minimum : 1% ; maximum : 100%).
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité.
+        
+        **Minimum :** 1%
+        **Maximum :** 100%
       default: 1
       selector:
         number:
@@ -226,7 +238,10 @@ blueprint:
     brightness_move_max_loop_repeats:
       name: Luminosité - nombre maximal d'exécutions de la boucle de réglage continu
       description: |
-        Permet de déterminer le nombre maximal d'exécution de la boucle de réglage continu de la luminosité, pour éviter d'envoyer des commandes inutiles quand la lumière est à sa luminosité minimale ou maximale (minimum : 1 ; maximum : 255).
+        Permet de déterminer le nombre maximal d'exécution de la boucle de réglage continu de la luminosité, pour éviter d'envoyer des commandes inutiles quand la lumière est à sa luminosité minimale ou maximale.
+        
+        **Minimum :** 1
+        **Maximum :** 255
       default: 125
       selector:
         number:
@@ -236,9 +251,12 @@ blueprint:
     brightness_move_delay_loop_repeats:
       name: Luminosité - temps entre chaque exécution de la boucle de réglage continu
       description: |
-        Permet de déterminer l'intervalle de temps entre chaque exécution de la boucle de réglage continu de la luminosité, pour fluidifier le passage d'une luminosité à une autre (minimum : 0,01 seconde ; maximum : 1 seconde).
+        Permet de déterminer l'intervalle de temps entre chaque exécution de la boucle de réglage continu de la luminosité, pour fluidifier le passage d'une luminosité à une autre.
         
         **Attention** : un intervalle de temps trop court peut saturer un réseau (ZigBee, WiFi, etc.), et rendre inopérant le réglage de la luminosité mais aussi tout autre élément utilisant le même réseau.
+        
+        **Minimum :** 0,01 seconde
+        **Maximum :** 1 seconde
       default: 0.05
       selector:
         number:
