@@ -32,7 +32,7 @@ blueprint:
     scenario_1_zone_1:
       name: Zone 1 - Scénario 1
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -40,7 +40,7 @@ blueprint:
     scenario_2_zone_1:
       name: Zone 1 - Scénario 2
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -48,7 +48,7 @@ blueprint:
     scenario_3_zone_1:
       name: Zone 1 - Scénario 3
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -56,7 +56,7 @@ blueprint:
     scenario_4_zone_1:
       name: Zone 1 - Scénario 4
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -64,7 +64,7 @@ blueprint:
     scenario_5_zone_1:
       name: Zone 1 - Scénario 5
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -80,7 +80,7 @@ blueprint:
     scenario_1_zone_2:
       name: Zone 2 - Scénario 1
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -88,7 +88,7 @@ blueprint:
     scenario_2_zone_2:
       name: Zone 2 - Scénario 2
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -96,7 +96,7 @@ blueprint:
     scenario_3_zone_2:
       name: Zone 2 - Scénario 3
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -104,7 +104,7 @@ blueprint:
     scenario_4_zone_2:
       name: Zone 2 - Scénario 4
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -112,7 +112,7 @@ blueprint:
     scenario_5_zone_2:
       name: Zone 2 - Scénario 5
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -128,7 +128,7 @@ blueprint:
     scenario_1_zone_3:
       name: Zone 3 - Scénario 1
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -136,7 +136,7 @@ blueprint:
     scenario_2_zone_3:
       name: Zone 3 - Scénario 2
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -144,7 +144,7 @@ blueprint:
     scenario_3_zone_3:
       name: Zone 3 - Scénario 3
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -152,7 +152,7 @@ blueprint:
     scenario_4_zone_3:
       name: Zone 3 - Scénario 4
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -160,7 +160,7 @@ blueprint:
     scenario_5_zone_3:
       name: Zone 3 - Scénario 5
       description: |
-        Le scénario, appelé par la touche correspondante, n'est pas lié à la lumière controlée dans la zone.
+        Le scénario n'est pas lié à la lumière controlée dans la zone correspondante.
         Il peut de ce fait contenir toute action que l'utilisateur veut exécuter.
       default: []
       selector:
@@ -184,7 +184,7 @@ blueprint:
     brightness_step:
       name: Luminosité - intervalle de réglage unitaire (valeur)
       description: |
-        Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
+        Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité (minimum : 1 ; maximum : 255).
       default: 15
       selector:
         number:
@@ -194,7 +194,7 @@ blueprint:
     brightness_step_pct:
       name: Luminosité - intervalle de réglage unitaire (pourcentage)
       description: |
-        Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité (minimum : 1% ; maximum : 100%).
       default: 5
       selector:
         number:
@@ -205,7 +205,7 @@ blueprint:
     brightness_step_loop:
       name: Luminosité - intervalle de réglage continu (valeur)
       description: |
-        Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité lors d'appuis longs sur les boutons de réglage de la luminosité.
+        Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité (minimum : 1 ; maximum : 255).
       default: 2
       selector:
         number:
@@ -215,7 +215,7 @@ blueprint:
     brightness_step_pct_loop:
       name: Luminosité - intervalle de réglage continu (pourcentage)
       description: |
-        Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité lors d'appuis longs sur les boutons de réglage de la luminosité.
+        Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité (minimum : 1% ; maximum : 100%).
       default: 1
       selector:
         number:
@@ -224,9 +224,9 @@ blueprint:
           unit_of_measurement: '%'
           mode: box
     brightness_move_max_loop_repeats:
-      name: Nombre maximal d'exécutions de la boucle de réglage continu de la luminosité.
+      name: Luminosité - nombre maximal d'exécutions de la boucle de réglage continu
       description: |
-        To-do
+        Permet de déterminer le nombre maximal d'exécution de la boucle de réglage continu de la luminosité, pour éviter d'envoyer des commandes inutiles quand la lumière est à sa luminosité minimale ou maximale (minimum : 1 ; maximum : 255).
       default: 125
       selector:
         number:
@@ -234,10 +234,11 @@ blueprint:
           max: 255
           mode: box
     brightness_move_delay_loop_repeats:
-      name: |
-        Temps entre chaque exécution de la boucle de réglage continu de la luminosité.
+      name: Luminosité - temps entre chaque exécution de la boucle de réglage continu
       description: |
-        To-do
+        Permet de déterminer l'intervalle de temps entre chaque exécution de la boucle de réglage continu de la luminosité, pour fluidifier le passage d'une luminosité à une autre (minimum : 0,01 seconde ; maximum : 1 seconde).
+        
+        **Attention** : un intervalle de temps trop court peut saturer un réseau (ZigBee, WiFi, etc.), et rendre inopérant le réglage de la luminosité mais aussi tout autre élément utilisant le même réseau.
       default: 0.05
       selector:
         number:
@@ -256,7 +257,7 @@ blueprint:
         Une commande `on` en zone 1 sera suivie d'une commande `off` en zone 2 ou 3.
         La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
         
-        Il peut être plus judicieux d'interpréter ces commandes en `toggle`.
+        Pour éviter ces effets indésirables, les commandes `on` et `off` peuvent être consédirées en `toggle` (en bascule).
       default: True
       selector:
         boolean:
