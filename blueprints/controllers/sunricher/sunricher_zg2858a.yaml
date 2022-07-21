@@ -171,7 +171,7 @@ blueprint:
         La luminosité peut être réglée en valeur numérique (de 0 à 255), ou en pourcentage (de 0 à 100%).
         Le réglage en valeur numérique permet plus de granularité, tandis que le réglage en pourcentage est plus aisé à comprendre.
         
-        S'applique pour toutes les lumières.
+        **Valeur par défaut :** valeur numérique
       default: value
       selector:
         select:
@@ -188,6 +188,8 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        
+        **Valeur par défaut :** 15
       default: 15
       selector:
         number:
@@ -201,6 +203,8 @@ blueprint:
         
         **Minimum :** 1%
         **Maximum :** 100%
+        
+        **Valeur par défaut :** 5%
       default: 5
       selector:
         number:
@@ -215,6 +219,8 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        
+        **Valeur par défaut :** 2
       default: 2
       selector:
         number:
@@ -228,6 +234,8 @@ blueprint:
         
         **Minimum :** 1%
         **Maximum :** 100%
+        
+        **Valeur par défaut :** 1%
       default: 1
       selector:
         number:
@@ -242,6 +250,8 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        
+        **Valeur par défaut :** 125
       default: 125
       selector:
         number:
@@ -257,6 +267,8 @@ blueprint:
         
         **Minimum :** 0,01 seconde
         **Maximum :** 1 seconde
+        
+        **Valeur par défaut :** 0,05 seconde
       default: 0.05
       selector:
         number:
@@ -276,6 +288,8 @@ blueprint:
         La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
         
         Pour éviter ces effets indésirables, les commandes `on` et `off` peuvent être consédirées en `toggle` (en bascule).
+        
+        **Valeur par défaut :** activé
       default: True
       selector:
         boolean:
