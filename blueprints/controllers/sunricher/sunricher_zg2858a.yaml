@@ -1,7 +1,31 @@
 blueprint:
-  name: Sunricher - Télécommande RGBCCT 3 canaux
+  name: Sunricher ZG2858A - Télécommande RGB/CCT/DIM 3 canaux
   description: |
-    ![Image](https://raw.githubusercontent.com/schiz0phr3ne/ha-blueprints/main/images/sunricher/sunricher_zg2858a/sunricher_zg2858a.png)
+    # Sunricher ZG2858A - Télécommande RGB/CCT/DIM 3 canaux
+    
+    La télécommande **Sunricher ZG2858A** permet, grâce à ses nombreuses fonctions, de contrôler différentes lumières grâce à ses 3 canaux et ses contrôles de luminosité et de température de couleur.
+    En plus, des boutons dédiés à l'exécution de scénarios ou de scènes permettent de rapidement définir un éclairage à sa convenance, mais aussi de contrôler n'importe quel appareil depuis cette automatisation.
+    
+    L'automatisation permet :
+    * de **contrôler 3 lumières différentes** (1 par canal)
+        * allumage/extinction
+        * contrôle de la luminosité, en continu ou non
+        * contrôle de la température de couleur
+    * d'**exécuter 5 scénarios ou scènes** (5 par canal)
+        * scénarios totalement indépendant de la lumière contrôlée dans chaque zone
+        * n'importe quel appareil ou service peut être contrôlé depuis les scénarios
+    
+    L'automatisation permet également de **régler finement les paramètres des fonctions de base** :
+    * interprétation des commandes `on` et `off`
+    * type de réglage de la luminosité
+        * valeur numérique
+        * pourcentage
+    * intervalle de réglage de la luminosité pour chaque type de réglage, en continu ou non
+    * intervalle de temps entre chaque réglage de la luminosité, en continu
+    
+    **Visuel de la télécommande :**
+    
+    ![Photo de la télécommande Sunricher ZG2858A](https://raw.githubusercontent.com/schiz0phr3ne/ha-blueprints/main/images/sunricher/sunricher_zg2858a/sunricher_zg2858a.png)
   domain: automation
   
   input:
@@ -166,6 +190,22 @@ blueprint:
       default: []
       selector:
         action:
+    on_off_as_toggle:
+      name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
+      description: |
+        La télécommande envoie une commande `on` ou une commande `off`, quelque soit l'état de l'appareil contrôlé, lors d'appuis sur le bouton d'alimentation.
+        Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
+        
+        **Exemple :**
+        Une commande `on` en zone 1 sera suivie d'une commande `off` en zone 2 ou 3.
+        La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
+        
+        Pour éviter ces effets indésirables, les commandes `on` et `off` peuvent être consédirées en `toggle` (en bascule).
+        
+        **Valeur par défaut :** activé
+      default: True
+      selector:
+        boolean:
     brightness_setting_type:
       name: Luminosité - type de réglage
       description: |
@@ -278,22 +318,6 @@ blueprint:
           step: 0.01
           unit_of_measurement: 'seconde'
           mode: box
-    on_off_as_toggle:
-      name: Interpréter les commandes d'allumage et d'extinction en tant que bascule
-      description: |
-        La télécommande envoie une commande `on` ou une commande `off`, quelque soit l'état de l'appareil contrôlé, lors d'appuis sur le bouton d'alimentation.
-        Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
-        
-        **Exemple :**
-        Une commande `on` en zone 1 sera suivie d'une commande `off` en zone 2 ou 3.
-        La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
-        
-        Pour éviter ces effets indésirables, les commandes `on` et `off` peuvent être consédirées en `toggle` (en bascule).
-        
-        **Valeur par défaut :** activé
-      default: True
-      selector:
-        boolean:
           
 variables:
   integration: !input integration
@@ -301,6 +325,7 @@ variables:
   light_zone_1: !input light_zone_1
   light_zone_2: !input light_zone_2
   light_zone_3: !input light_zone_3
+  on_off_as_toggle: !input on_off_as_toggle
   brightness_setting_type: !input brightness_setting_type
   brightness_step: !input brightness_step
   brightness_step_pct: !input brightness_step_pct
@@ -308,7 +333,6 @@ variables:
   brightness_step_pct_loop: !input brightness_step_pct_loop
   brightness_move_max_loop_repeats: !input brightness_move_max_loop_repeats
   brightness_move_delay_loop_repeats: !input brightness_move_delay_loop_repeats
-  on_off_as_toggle: !input on_off_as_toggle
   
   actions_mapping:
     zigbee2mqtt:
@@ -334,6 +358,7 @@ variables:
   
 mode: restart
 max_exceeded: silent
+
 trigger:
   # trigger for zigbee2mqtt
   - platform: event
