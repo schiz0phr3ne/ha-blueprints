@@ -327,7 +327,7 @@ blueprint:
     transition_single:
       name: Transition - temps de transition des réglages unitaires
       description: |
-        To-do
+        Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages unitaires.
         
         **Minimum :** 0 seconde
         **Maximum :** 60 secondes
@@ -345,7 +345,7 @@ blueprint:
     transition_loop:
       name: Transition - temps de transition des réglages continus
       description: |
-        To-do
+        Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages continus.
         
         **Minimum :** 0 seconde
         **Maximum :** 1 seconde
