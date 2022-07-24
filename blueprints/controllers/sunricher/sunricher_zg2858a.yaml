@@ -22,6 +22,7 @@ blueprint:
         * pourcentage
     * intervalle de réglage de la luminosité pour chaque type de réglage, en continu ou non
     * intervalle de temps entre chaque réglage de la luminosité, en continu
+    * temps de transition d'un état à un autre
     
     **Visuel de la télécommande :**
     
