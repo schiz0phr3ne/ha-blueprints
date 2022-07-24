@@ -229,6 +229,7 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        **Pas :** 1
         
         **Valeur par défaut :** 15
       default: 15
@@ -244,6 +245,7 @@ blueprint:
         
         **Minimum :** 1%
         **Maximum :** 100%
+        **Pas :** 1%
         
         **Valeur par défaut :** 5%
       default: 5
@@ -260,6 +262,7 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        **Pas :** 1
         
         **Valeur par défaut :** 2
       default: 2
@@ -275,6 +278,7 @@ blueprint:
         
         **Minimum :** 1%
         **Maximum :** 100%
+        **Pas :** 1%
         
         **Valeur par défaut :** 1%
       default: 1
@@ -291,6 +295,7 @@ blueprint:
         
         **Minimum :** 1
         **Maximum :** 255
+        **Pas :** 1
         
         **Valeur par défaut :** 125
       default: 125
@@ -308,12 +313,49 @@ blueprint:
         
         **Minimum :** 0,01 seconde
         **Maximum :** 1 seconde
+        **Pas :** 0,01 seconde
         
         **Valeur par défaut :** 0,05 seconde
       default: 0.05
       selector:
         number:
           min: 0.01
+          max: 1
+          step: 0.01
+          unit_of_measurement: 'seconde'
+          mode: box
+    transition_single:
+      name: Transition - temps de transition des réglages unitaires
+      description: |
+        Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages unitaires.
+        
+        **Minimum :** 0 seconde
+        **Maximum :** 60 secondes
+        **Pas :** 0,1 seconde
+        
+        **Valeur par défaut :** 0,1 seconde
+      default: 0.1
+      selector:
+        number:
+          min: 0.
+          max: 60
+          step: 0.1
+          unit_of_measurement: 'seconde(s)'
+          mode: box
+    transition_loop:
+      name: Transition - temps de transition des réglages continus
+      description: |
+        Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages continus.
+        
+        **Minimum :** 0 seconde
+        **Maximum :** 1 seconde
+        **Pas :** 0,01 seconde
+        
+        **Valeur par défaut :** 0,1 seconde
+      default: 0.1
+      selector:
+        number:
+          min: 0
           max: 1
           step: 0.01
           unit_of_measurement: 'seconde'
@@ -333,6 +375,8 @@ variables:
   brightness_step_pct_loop: !input brightness_step_pct_loop
   brightness_move_max_loop_repeats: !input brightness_move_max_loop_repeats
   brightness_move_delay_loop_repeats: !input brightness_move_delay_loop_repeats
+  transition_single: !input transition_single
+  transition_loop: !input transition_loop
   
   actions_mapping:
     zigbee2mqtt:
@@ -430,6 +474,7 @@ action:
               xy_color:
                 - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
                 - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+              transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in color_temperature_move }}'
@@ -437,6 +482,7 @@ action:
           - service: light.turn_on
             data_template:
               color_temp: '{{ trigger.event.data.new_state.attributes.action_color_temperature | int }}'
+              transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in brightness_step_down }}'
@@ -444,9 +490,9 @@ action:
           - service: light.turn_on
             data: >
               {% if brightness_setting_type == "value" %}
-                {"brightness_step": {{ ("-" ~ brightness_step|string)|int }}}
+                {"brightness_step": {{ ("-" ~ brightness_step|string)|int }}, "transition": {{ transition_single }}}
               {% else %}
-                {"brightness_step_pct": {{ ("-" ~ brightness_step_pct|string)|int }}}
+                {"brightness_step_pct": {{ ("-" ~ brightness_step_pct|string)|int }}, "transition": {{ transition_single }}}
               {% endif %}
             target:
               device_id: '{{ entity }}'
@@ -455,9 +501,9 @@ action:
           - service: light.turn_on
             data: >
               {% if brightness_setting_type == "value" %}
-                {"brightness_step": {{ brightness_step }}}
+                {"brightness_step": {{ brightness_step }}, "transition": {{ transition_single }}}
               {% else %}
-                {"brightness_step_pct": {{ brightness_step_pct }}}
+                {"brightness_step_pct": {{ brightness_step_pct }}, "transition": {{ transition_single }}}
               {% endif %}
             target:
               device_id: '{{ entity }}'
@@ -469,9 +515,9 @@ action:
                 - service: light.turn_on
                   data: >
                     {% if brightness_setting_type == "value" %}
-                      {"brightness_step": {{ ("-" ~ brightness_step_loop|string)|int }}}
+                      {"brightness_step": {{ ("-" ~ brightness_step_loop|string)|int }}, "transition": {{ transition_loop }}}
                     {% else %}
-                      {"brightness_step_pct": {{ ("-" ~ brightness_step_pct_loop|string)|int }}}
+                      {"brightness_step_pct": {{ ("-" ~ brightness_step_pct_loop|string)|int }}, "transition": {{ transition_loop }}}
                     {% endif %}
                   target:
                     device_id: '{{ entity }}'
@@ -484,9 +530,9 @@ action:
                 - service: light.turn_on
                   data: >
                     {% if brightness_setting_type == "value" %}
-                      {"brightness_step": {{ brightness_step_loop }}}
+                      {"brightness_step": {{ brightness_step_loop }}, "transition": {{ transition_loop }}}
                     {% else %}
-                      {"brightness_step_pct": {{ brightness_step_pct_loop }}}
+                      {"brightness_step_pct": {{ brightness_step_pct_loop }}, "transition": {{ transition_loop }}}
                     {% endif %}
                   target:
                     device_id: '{{ entity }}'
