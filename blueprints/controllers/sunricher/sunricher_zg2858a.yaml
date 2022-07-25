@@ -448,10 +448,11 @@ action:
         {% elif "ep3" in trigger_action %}
           {{ light_zone_3 }}
         {% endif %}
-  # choose the sequence to run based on the received button event
+  # Choose the sequence to run based on the received button event
   - choose:
       - conditions: '{{ trigger_action | string in power_on }}'
         sequence:
+          # The service used is defined by the variable on_off_as_toggle
           - service: >
               {% if on_off_as_toggle %}
                 light.toggle
@@ -462,6 +463,7 @@ action:
               device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in power_off }}'
         sequence:
+          # The service used is defined by the variable on_off_as_toggle
           - service: >
               {% if on_off_as_toggle %}
                 light.toggle
@@ -540,6 +542,7 @@ action:
                   target:
                     device_id: '{{ entity }}'
                 - delay: '{{ brightness_move_delay_loop_repeats }}'
+      # Run custom actions
       - conditions: '{{ trigger_action | string in scenarios }}'
         sequence:
           - choose:
