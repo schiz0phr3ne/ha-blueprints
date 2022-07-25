@@ -1,0 +1,73 @@
+# Blueprint metadata
+blueprint:
+  name: Prise - Contrôle basé sur la consommation électrique
+  description: |
+    To-do
+    
+  domain: automation
+  
+  input:
+    plug_device:
+      name: Prise à contrôler
+      description: |
+        To-do
+      selector:
+        device:
+          domain: switch
+    plug_power_sensor:
+      name: Capteur de consommation électrique de la prise à contrôler
+      description: |
+        To-do
+      selector:
+        entity:
+          domain: sensor
+    activation_threshold:
+      name: Seuil d'activation de l'automatisation
+      description: |
+        To-do
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 3680
+          unit_of_measurement: 'W'
+          mode: box
+    activation_delay:
+      name: Délai avant activation de l'automatisation
+      description: |
+        To-do
+      default: 15
+      selector:
+        number:
+          min: 1
+          max: 1440
+          unit_of_measurement: 'minute(s)'
+          mode: box
+    send_notification:
+      name: Envoyer une notification après activation de l'automatisation
+      description: |
+        To-do
+      default: True
+      selector:
+        boolean:
+    notification_destination:
+      name: Destination de la notification
+      description: |
+        To-do
+      selector:
+        device:
+    notification_title:
+      name: Titre de la notification
+      description: |
+        To-do
+      default: []
+      selector:
+        text:
+    notification_message:
+      name: Contenu de la notification
+      description: |
+        To-do
+      default: []
+      selector:
+        text:
+          multiline: True
