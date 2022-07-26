@@ -38,7 +38,7 @@ blueprint:
         To-do
       selector:
         duration:
-        enable_days: True
+        #enable_days: True
     check_state:
       name: Confirmation de l'état avant activation de l'automatisation
       description: |
