@@ -71,3 +71,22 @@ blueprint:
       selector:
         text:
           multiline: True
+
+variables:
+  plug_device: !input plug_device
+  plug_power_sensor: !input plug_power_sensor
+  activation_threshold: !input activation_threshold
+  activation_delay: !input activation_delay
+  send_notification: !input send_notification
+  notification_destination: !input notification_destination
+  notification_title: !input notification_title
+  notification_message: !input notification_message
+
+mode: unique
+max_exceeded: silent
+
+trigger:
+  - platform: numeric_state
+    entity_id: '{{ plug_power_sensor }}'
+    below: '{{ activation_threshold }}'
+condition: []
