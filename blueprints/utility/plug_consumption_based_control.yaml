@@ -43,6 +43,8 @@ blueprint:
       name: Confirmation de l'état avant activation de l'automatisation
       description: |
         To-do
+      selector:
+        boolean:
     send_notification:
       name: Envoyer une notification après activation de l'automatisation
       description: |
