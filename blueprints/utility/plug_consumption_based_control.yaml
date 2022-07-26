@@ -13,7 +13,8 @@ blueprint:
         To-do
       selector:
         device:
-          domain: switch
+          entity:
+            domain: switch
     plug_power_sensor:
       name: Capteur de consommation électrique de la prise à contrôler
       description: |
