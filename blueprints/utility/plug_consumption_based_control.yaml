@@ -36,13 +36,13 @@ blueprint:
       name: Délai avant activation de l'automatisation
       description: |
         To-do
-      default: 15
       selector:
-        number:
-          min: 1
-          max: 1440
-          unit_of_measurement: 'minute(s)'
-          mode: box
+        duration:
+          enable_days: True
+    check_state:
+      name: Confirmation de l'état avant activation de l'automatisation
+      description: |
+        To-do
     send_notification:
       name: Envoyer une notification après activation de l'automatisation
       description: |
@@ -77,6 +77,7 @@ variables:
   plug_power_sensor: !input plug_power_sensor
   activation_threshold: !input activation_threshold
   activation_delay: !input activation_delay
+  check_state: !input check_state
   send_notification: !input send_notification
   notification_destination: !input notification_destination
   notification_title: !input notification_title
@@ -90,3 +91,10 @@ trigger:
     entity_id: '{{ plug_power_sensor }}'
     below: '{{ activation_threshold }}'
 condition: []
+action:
+  - delay: '{{ activation_delay }}'
+  - condition: numeric_state
+    entity_id: '{{ plug_power_sensor }}'
+    below: '{{ activation_threshold }}'
+  - type: turn_off
+    device_id: '{{ plug_device }}'
