@@ -85,18 +85,20 @@ variables:
   notification_title: !input notification_title
   notification_message: !input notification_message
 
+trigger_variables:
+  plug_power_sensor: !input plug_power_sensor
+  activation_threshold: !input activation_threshold
+
 mode: unique
 max_exceeded: silent
 
-trigger:
-  - platform: numeric_state
-    entity_id: '{{ plug_power_sensor }}'
-    below: '{{ activation_threshold }}'
+trigger: 
+  - platform: template
+    value_template: '{{ states(plug_power_sensor) | float < activation_threshold }}'
 condition: []
 action:
   - delay: '{{ activation_delay }}'
-  - condition: numeric_state
-    entity_id: '{{ plug_power_sensor }}'
-    below: '{{ activation_threshold }}'
-  - type: turn_off
-    device_id: '{{ plug_device }}'
+  - condition: '{{ plug_power_sensor < activation_threshold }}'
+  - service:  switch.turn_off
+    data_template:
+      device_id: '{{ plug_device }}'
