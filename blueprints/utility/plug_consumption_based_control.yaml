@@ -39,10 +39,18 @@ blueprint:
         To-do
       selector:
         duration:
-    check_state:
-      name: Confirmation de l'état avant activation de l'automatisation
+    check_power:
+      name: Vérification de la consommation avant activation de l'automatisation
       description: |
         To-do
+      default: True
+      selector:
+        boolean:
+    check_state:
+      name: Vérification de l'état de la prise avant activation de l'automatisation
+      description: |
+        To-do
+      default: True
       selector:
         boolean:
     send_notification:
@@ -98,7 +106,10 @@ trigger:
 condition: []
 action:
   - delay: '{{ activation_delay }}'
-  - condition: '{{ plug_power_sensor < activation_threshold }}'
+  - choose:
+      - conditions: '{{ if check_power }}'
+        sequence:
+          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
   - service:  switch.turn_off
     data_template:
       device_id: '{{ plug_device }}'
