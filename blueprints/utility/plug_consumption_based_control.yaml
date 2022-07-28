@@ -97,7 +97,7 @@ trigger_variables:
   plug_power_sensor: !input plug_power_sensor
   activation_threshold: !input activation_threshold
 
-mode: unique
+mode: single
 max_exceeded: silent
 
 trigger: 
