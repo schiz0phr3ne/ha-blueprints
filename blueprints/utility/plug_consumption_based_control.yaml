@@ -7,14 +7,13 @@ blueprint:
   domain: automation
   
   input:
-    plug_device:
+    plug_entity:
       name: Prise à contrôler
       description: |
         To-do
       selector:
-        device:
-          entity:
-            domain: switch
+        entity:
+          domain: switch
     plug_power_sensor:
       name: Capteur de consommation électrique de la prise à contrôler
       description: |
@@ -83,10 +82,11 @@ blueprint:
           multiline: True
 
 variables:
-  plug_device: !input plug_device
+  plug_entity: !input plug_entity
   plug_power_sensor: !input plug_power_sensor
   activation_threshold: !input activation_threshold
   activation_delay: !input activation_delay
+  check_power: !input check_power
   check_state: !input check_state
   send_notification: !input send_notification
   notification_destination: !input notification_destination
@@ -107,9 +107,27 @@ condition: []
 action:
   - delay: '{{ activation_delay }}'
   - choose:
-      - conditions: '{{ if check_power }}'
+      - conditions: '{{ check_power and check_state }}'
         sequence:
           - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
-  - service:  switch.turn_off
-    data_template:
-      device_id: '{{ plug_device }}'
+          - service:  switch.turn_off
+            data:
+              entity_id: '{{ plug_entity }}'
+      - conditions: '{{ check_power and not check_state }}'
+        sequence:
+          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+          - service:  switch.turn_off
+            data:
+              entity_id: '{{ plug_entity }}'
+      - conditions: '{{ not check_power and check_state }}'
+        sequence:
+          - condition: '{{ states(plug_entity) == "on" }}'
+          - service:  switch.turn_off
+            data:
+              entity_id: '{{ plug_entity }}'
+      - conditions: '{{ not check_power and not check_state }}'
+        sequence:
+          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+          - service:  switch.turn_off
+            data:
+              entity_id: '{{ plug_entity }}'
