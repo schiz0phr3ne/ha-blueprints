@@ -42,21 +42,21 @@ blueprint:
       name: Vérification de la consommation avant activation de l'automatisation
       description: |
         To-do
-      default: True
+      default: true
       selector:
         boolean:
     check_state:
       name: Vérification de l'état de la prise avant activation de l'automatisation
       description: |
         To-do
-      default: True
+      default: true
       selector:
         boolean:
     send_notification:
       name: Envoyer une notification après activation de l'automatisation
       description: |
         To-do
-      default: True
+      default: true
       selector:
         boolean:
     notification_destination:
@@ -79,7 +79,7 @@ blueprint:
       default: []
       selector:
         text:
-          multiline: True
+          multiline: true
 
 variables:
   plug_entity: !input plug_entity
@@ -107,27 +107,27 @@ condition: []
 action:
   - delay: '{{ activation_delay }}'
   - choose:
-      - conditions: '{{ check_power and check_state }}'
-        sequence:
-          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
-          - service:  switch.turn_off
-            data:
-              entity_id: '{{ plug_entity }}'
-      - conditions: '{{ check_power and not check_state }}'
-        sequence:
-          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
-          - service:  switch.turn_off
-            data:
-              entity_id: '{{ plug_entity }}'
-      - conditions: '{{ not check_power and check_state }}'
-        sequence:
-          - condition: '{{ states(plug_entity) == "on" }}'
-          - service:  switch.turn_off
-            data:
-              entity_id: '{{ plug_entity }}'
-      - conditions: '{{ not check_power and not check_state }}'
-        sequence:
-          - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
-          - service:  switch.turn_off
-            data:
-              entity_id: '{{ plug_entity }}'
+    - conditions: '{{ check_power and check_state }}'
+      sequence:
+      - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+      - condition: '{{ states(plug_entity) == "on" }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+    - conditions: '{{ check_power and not check_state }}'
+      sequence:
+      - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+    - conditions: '{{ not check_power and check_state }}'
+      sequence:
+      - condition: '{{ states(plug_entity) == "on" }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+    - conditions: '{{ not check_power and not check_state }}'
+      sequence:
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
