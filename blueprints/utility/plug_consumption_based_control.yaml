@@ -64,7 +64,7 @@ blueprint:
       description: |
         To-do
       selector:
-        device:
+        text:
     notification_title:
       name: Titre de la notification
       description: |
@@ -131,3 +131,7 @@ action:
       - service: switch.turn_off
         data:
           entity_id: '{{ plug_entity }}'
+      - service: '{{ notification_destination }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
