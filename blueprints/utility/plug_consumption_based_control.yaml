@@ -59,7 +59,7 @@ blueprint:
       default: true
       selector:
         boolean:
-    notification_destination:
+    mobile_notification_service:
       name: Destination de la notification
       description: |
         To-do
@@ -89,7 +89,7 @@ variables:
   check_power: !input check_power
   check_state: !input check_state
   send_notification: !input send_notification
-  notification_destination: !input notification_destination
+  mobile_notification_service: !input mobile_notification_service
   notification_title: !input notification_title
   notification_message: !input notification_message
 
@@ -114,24 +114,40 @@ action:
       - service: switch.turn_off
         data:
           entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
     - conditions: '{{ check_power and not check_state }}'
       sequence:
       - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
       - service: switch.turn_off
         data:
           entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
     - conditions: '{{ not check_power and check_state }}'
       sequence:
       - condition: '{{ states(plug_entity) == "on" }}'
       - service: switch.turn_off
         data:
           entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
     - conditions: '{{ not check_power and not check_state }}'
       sequence:
       - service: switch.turn_off
         data:
           entity_id: '{{ plug_entity }}'
-      - service: '{{ notification_destination }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
         data:
           title: '{{ notification_title }}'
           message: '{{ notification_message }}'
