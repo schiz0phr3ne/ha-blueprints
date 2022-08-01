@@ -1,0 +1,153 @@
+# Blueprint metadata
+blueprint:
+  name: Prise - Contrôle basé sur la consommation électrique
+  description: |
+    To-do
+    
+  domain: automation
+  
+  input:
+    plug_entity:
+      name: Prise à contrôler
+      description: |
+        To-do
+      selector:
+        entity:
+          domain: switch
+    plug_power_sensor:
+      name: Capteur de consommation électrique de la prise à contrôler
+      description: |
+        To-do
+      selector:
+        entity:
+          domain: sensor
+    activation_threshold:
+      name: Seuil d'activation de l'automatisation
+      description: |
+        To-do
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 3680
+          unit_of_measurement: 'W'
+          mode: box
+    activation_delay:
+      name: Délai avant activation de l'automatisation
+      description: |
+        To-do
+      selector:
+        duration:
+    check_power:
+      name: Vérification de la consommation avant activation de l'automatisation
+      description: |
+        To-do
+      default: true
+      selector:
+        boolean:
+    check_state:
+      name: Vérification de l'état de la prise avant activation de l'automatisation
+      description: |
+        To-do
+      default: true
+      selector:
+        boolean:
+    send_notification:
+      name: Envoyer une notification après activation de l'automatisation
+      description: |
+        To-do
+      default: true
+      selector:
+        boolean:
+    mobile_notification_service:
+      name: Destination de la notification
+      description: |
+        To-do
+      selector:
+        text:
+    notification_title:
+      name: Titre de la notification
+      description: |
+        To-do
+      default: []
+      selector:
+        text:
+    notification_message:
+      name: Contenu de la notification
+      description: |
+        To-do
+      default: []
+      selector:
+        text:
+          multiline: true
+
+variables:
+  plug_entity: !input plug_entity
+  plug_power_sensor: !input plug_power_sensor
+  activation_threshold: !input activation_threshold
+  activation_delay: !input activation_delay
+  check_power: !input check_power
+  check_state: !input check_state
+  send_notification: !input send_notification
+  mobile_notification_service: !input mobile_notification_service
+  notification_title: !input notification_title
+  notification_message: !input notification_message
+
+trigger_variables:
+  plug_power_sensor: !input plug_power_sensor
+  activation_threshold: !input activation_threshold
+
+mode: single
+max_exceeded: silent
+
+trigger: 
+  - platform: template
+    value_template: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+condition: []
+action:
+  - delay: '{{ activation_delay }}'
+  - choose:
+    - conditions: '{{ check_power and check_state }}'
+      sequence:
+      - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+      - condition: '{{ states(plug_entity) == "on" }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
+    - conditions: '{{ check_power and not check_state }}'
+      sequence:
+      - condition: '{{ states(plug_power_sensor) | float < activation_threshold }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
+    - conditions: '{{ not check_power and check_state }}'
+      sequence:
+      - condition: '{{ states(plug_entity) == "on" }}'
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
+    - conditions: '{{ not check_power and not check_state }}'
+      sequence:
+      - service: switch.turn_off
+        data:
+          entity_id: '{{ plug_entity }}'
+      - condition: '{{ send_notification }}'
+      - service: '{{ mobile_notification_service }}'
+        data:
+          title: '{{ notification_title }}'
+          message: '{{ notification_message }}'
