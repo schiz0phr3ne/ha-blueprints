@@ -17,14 +17,20 @@ blueprint:
     plug_power_sensor:
       name: Capteur de consommation électrique de la prise à contrôler
       description: |
-        To-do
+        Capteur de consommation électrique à utiliser pour l'automatisation.
       selector:
         entity:
           domain: sensor
     activation_threshold:
-      name: Seuil d'activation de l'automatisation
+      name: Seuil de déclenchement de l'automatisation
       description: |
-        To-do
+        Valeur sous laquelle l'automatisation est déclenchée.
+        
+        **Minimum :** 1
+        **Minimum :** 3680
+        **Pas :** 1
+        
+        **Valeur par défaut :** 1
       default: 1
       selector:
         number:
@@ -33,15 +39,19 @@ blueprint:
           unit_of_measurement: 'W'
           mode: box
     activation_delay:
-      name: Délai avant activation de l'automatisation
+      name: Délai avant exécution de l'action
       description: |
-        To-do
+        Délai avant exécution de l'action permettant, par exemple et si la vérification de consommation de la prise est activée, de brancher un autre équipement sans que la prise ne s'éteigne.
+        
+        **Valeur par défaut :** 00:00:00
       selector:
         duration:
     check_power:
-      name: Vérification de la consommation avant activation de l'automatisation
+      name: Vérification de la consommation électrique avant activation de l'automatisation
       description: |
-        To-do
+        Quand activée, la vérification de la consommation électrique permet de ne pas éteindre la prise, si un appareil branché dessus consomme toujours de l'électricité.
+        
+        **Valeur par défaut :** activé
       default: true
       selector:
         boolean:
@@ -49,6 +59,8 @@ blueprint:
       name: Vérification de l'état de la prise avant activation de l'automatisation
       description: |
         To-do
+        
+        **Valeur par défaut :** activé
       default: true
       selector:
         boolean:
@@ -56,6 +68,8 @@ blueprint:
       name: Envoyer une notification après activation de l'automatisation
       description: |
         To-do
+        
+        **Valeur par défaut :** activé
       default: true
       selector:
         boolean:
