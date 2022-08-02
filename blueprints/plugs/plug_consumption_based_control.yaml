@@ -47,27 +47,29 @@ blueprint:
       selector:
         duration:
     check_power:
-      name: Vérification de la consommation électrique avant activation de l'automatisation
+      name: Vérification de la consommation électrique avant exécution de l'action
       description: |
-        Quand activée, la vérification de la consommation électrique permet de ne pas éteindre la prise, si un appareil branché dessus consomme toujours de l'électricité.
+        Quand activée, la vérification de la consommation électrique avant exécution de l'action permet de ne pas éteindre la prise, si un appareil branché dessus consomme toujours de l'électricité.
         
         **Valeur par défaut :** activé
       default: true
       selector:
         boolean:
     check_state:
-      name: Vérification de l'état de la prise avant activation de l'automatisation
+      name: Vérification de l'état de la prise avant exécution de l'action
       description: |
-        To-do
+        Quand activée, la vérification de l'état de la prise permet d'éviter d'exécuter l'action, si la prise est déjà dans l'état final.
         
         **Valeur par défaut :** activé
       default: true
       selector:
         boolean:
     send_notification:
-      name: Envoyer une notification après activation de l'automatisation
+      name: Envoyer une notification après exécution de l'action
       description: |
-        To-do
+        Permet, une fois l'action effectuée, d'envoyer une notification.
+        
+        **Attention :** seuls les services des appareils mobiles disposant de l'application Home Assistant sont disponibles (`notify.mobile_app_votre_appareil`).
         
         **Valeur par défaut :** activé
       default: true
