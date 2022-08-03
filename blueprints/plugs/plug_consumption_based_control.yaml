@@ -10,7 +10,7 @@ blueprint:
     plug_entity:
       name: Prise à contrôler
       description: |
-        To-do
+        Prise - ou tout autre appareil permettant de commuter sa sortie - à contrôler avec l'automatisation.
       selector:
         entity:
           domain: switch
@@ -69,8 +69,6 @@ blueprint:
       description: |
         Permet, une fois l'action effectuée, d'envoyer une notification.
         
-        **Attention :** seuls les services des appareils mobiles disposant de l'application Home Assistant sont disponibles (`notify.mobile_app_votre_appareil`).
-        
         **Valeur par défaut :** activé
       default: true
       selector:
@@ -78,20 +76,26 @@ blueprint:
     mobile_notification_service:
       name: Destination de la notification
       description: |
-        To-do
+        Service utilisé pour l'envoi de la notification.
+        
+        **Attention :** seuls les services des appareils mobiles disposant de l'application Home Assistant sont disponibles (`notify.mobile_app_votre_appareil`).
       selector:
         text:
     notification_title:
       name: Titre de la notification
       description: |
-        To-do
+        Titre de la notification.
+        
+        Les variables `{{ plug_entity }}`, `{{ plug_power_sensor }}`, `{{ activation_threshold }}` et `{{ activation_delay }}` peuvent être incluses, respectivement pour la prise contrôlée, le capteur de consommation électrique, le seuil de déclenchement et le délai avant exécution de l'action.
       default: []
       selector:
         text:
     notification_message:
       name: Contenu de la notification
       description: |
-        To-do
+        Contenu de la notification.
+        
+        Les variables `{{ plug_entity }}`, `{{ plug_power_sensor }}`, `{{ activation_threshold }}` et `{{ activation_delay }}` peuvent être incluses, respectivement pour la prise contrôlée, le capteur de consommation électrique, le seuil de déclenchement et le délai avant exécution de l'action.
       default: []
       selector:
         text:
