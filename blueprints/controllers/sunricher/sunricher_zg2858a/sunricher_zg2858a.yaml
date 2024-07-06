@@ -387,15 +387,15 @@ variables:
   # Mapping between actions and integrations
   actions_mapping:
     zigbee2mqtt:
-      power_on: ['on_ep1', 'on_ep2', 'on_ep3']
-      power_off: ['off_ep1', 'off_ep2', 'off_ep3']
-      color_move: ['color_move_ep1', 'color_move_ep2', 'color_move_ep3']
-      color_temperature_move: ['color_temperature_move_ep1', 'color_temperature_move_ep2', 'color_temperature_move_ep3']
-      brightness_step_down: ['brightness_step_down_ep1', 'brightness_step_down_ep2', 'brightness_step_down_ep3']
-      brightness_step_up: ['brightness_step_up_ep1', 'brightness_step_up_ep2', 'brightness_step_up_ep3']
-      brightness_move_down: ['brightness_move_down_ep1', 'brightness_move_down_ep2', 'brightness_move_down_ep3']
-      brightness_move_up: ['brightness_move_up_ep1', 'brightness_move_up_ep2', 'brightness_move_up_ep3']
-      scenarios: ['recall_1_ep1', 'recall_2_ep1', 'recall_3_ep1', 'recall_4_ep1', 'recall_5_ep1', 'recall_1_ep2', 'recall_2_ep2', 'recall_3_ep2', 'recall_4_ep2', 'recall_5_ep2', 'recall_1_ep3', 'recall_2_ep3', 'recall_3_ep3', 'recall_4_ep3', 'recall_5_ep3']
+      power_on: ['on_1', 'on_2', 'on_3']
+      power_off: ['off_1', 'off_2', 'off_3']
+      color_move: ['color_move_1', 'color_move_2', 'color_move_3']
+      color_temperature_move: ['color_temperature_move_1', 'color_temperature_move_2', 'color_temperature_move_3']
+      brightness_step_down: ['brightness_step_down_1', 'brightness_step_down_2', 'brightness_step_down_3']
+      brightness_step_up: ['brightness_step_up_1', 'brightness_step_up_2', 'brightness_step_up_3']
+      brightness_move_down: ['brightness_move_down_1', 'brightness_move_down_2', 'brightness_move_down_3']
+      brightness_move_up: ['brightness_move_up_1', 'brightness_move_up_2', 'brightness_move_up_3']
+      scenarios: ['recall_1_1', 'recall_2_1', 'recall_3_1', 'recall_4_1', 'recall_5_1', 'recall_1_2', 'recall_2_2', 'recall_3_2', 'recall_4_2', 'recall_5_2', 'recall_1_3', 'recall_2_3', 'recall_3_3', 'recall_4_3', 'recall_5_3']
   # Pre-choose actions for buttons based on configured integration
   power_on: '{{ actions_mapping[integration]["power_on"] }}'
   power_off: '{{ actions_mapping[integration]["power_off"] }}'
@@ -441,11 +441,11 @@ action:
         {%- endif -%}
       # Define target entity from zone in the trigger action
       entity: >
-        {% if "ep1" in trigger_action %}
+        {% if "1" in trigger_action %}
           {{ light_zone_1 }}
-        {% elif "ep2" in trigger_action %}
+        {% elif "2" in trigger_action %}
           {{ light_zone_2 }}
-        {% elif "ep3" in trigger_action %}
+        {% elif "3" in trigger_action %}
           {{ light_zone_3 }}
         {% endif %}
   # Choose the sequence to run based on the received button event
@@ -546,77 +546,77 @@ action:
       - conditions: '{{ trigger_action | string in scenarios }}'
         sequence:
           - choose:
-              - conditions: '{{ trigger_action | string == "recall_1_ep1" }}'
+              - conditions: '{{ trigger_action | string == "recall_1_1" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_1_zone_1
-              - conditions: '{{ trigger_action | string == "recall_2_ep1" }}'
+              - conditions: '{{ trigger_action | string == "recall_2_1" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_2_zone_1
-              - conditions: '{{ trigger_action | string == "recall_3_ep1" }}'
+              - conditions: '{{ trigger_action | string == "recall_3_1" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_3_zone_1
-              - conditions: '{{ trigger_action | string == "recall_4_ep1" }}'
+              - conditions: '{{ trigger_action | string == "recall_4_1" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_4_zone_1
-              - conditions: '{{ trigger_action | string == "recall_5_ep1" }}'
+              - conditions: '{{ trigger_action | string == "recall_5_1" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_5_zone_1
-              - conditions: '{{ trigger_action | string == "recall_1_ep2" }}'
+              - conditions: '{{ trigger_action | string == "recall_1_2" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_1_zone_2
-              - conditions: '{{ trigger_action | string == "recall_2_ep2" }}'
+              - conditions: '{{ trigger_action | string == "recall_2_2" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_2_zone_2
-              - conditions: '{{ trigger_action | string == "recall_3_ep2" }}'
+              - conditions: '{{ trigger_action | string == "recall_3_2" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_3_zone_2
-              - conditions: '{{ trigger_action | string == "recall_4_ep2" }}'
+              - conditions: '{{ trigger_action | string == "recall_4_2" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_4_zone_2
-              - conditions: '{{ trigger_action | string == "recall_5_ep2" }}'
+              - conditions: '{{ trigger_action | string == "recall_5_2" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_5_zone_2
-              - conditions: '{{ trigger_action | string == "recall_1_ep3" }}'
+              - conditions: '{{ trigger_action | string == "recall_1_3" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_1_zone_3
-              - conditions: '{{ trigger_action | string == "recall_2_ep3" }}'
+              - conditions: '{{ trigger_action | string == "recall_2_3" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_2_zone_3
-              - conditions: '{{ trigger_action | string == "recall_3_ep3" }}'
+              - conditions: '{{ trigger_action | string == "recall_3_3" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_3_zone_3
-              - conditions: '{{ trigger_action | string == "recall_4_ep3" }}'
+              - conditions: '{{ trigger_action | string == "recall_4_3" }}'
                 sequence:
                   - choose:
                       - conditions: []
                         sequence: !input scenario_4_zone_3
-              - conditions: '{{ trigger_action | string == "recall_5_ep3" }}'
+              - conditions: '{{ trigger_action | string == "recall_5_3" }}'
                 sequence:
                   - choose:
                       - conditions: []
