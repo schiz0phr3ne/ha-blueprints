@@ -3,10 +3,10 @@ blueprint:
   name: Sunricher ZG2858A - Télécommande RGB/CCT/DIM 3 canaux
   description: |
     # Sunricher ZG2858A - Télécommande RGB/CCT/DIM 3 canaux
-    
+
     La télécommande **Sunricher ZG2858A** permet, grâce à ses nombreuses fonctions, de contrôler différentes lumières grâce à ses 3 canaux et ses contrôles de luminosité et de température de couleur.
     En plus, des boutons dédiés à l'exécution de scénarios ou de scènes permettent de rapidement définir un éclairage à sa convenance, mais aussi de contrôler n'importe quel appareil depuis cette automatisation.
-    
+
     L'automatisation permet :
     * de **contrôler 3 lumières différentes** (1 par canal)
         * allumage/extinction
@@ -15,7 +15,7 @@ blueprint:
     * d'**exécuter 5 scénarios ou scènes** (5 par canal)
         * scénarios totalement indépendant de la lumière contrôlée dans chaque zone
         * n'importe quel appareil ou service peut être contrôlé depuis les scénarios
-    
+
     L'automatisation permet également de **régler finement les paramètres des fonctions de base** :
     * interprétation des commandes `on` et `off`
     * type de réglage de la luminosité
@@ -24,30 +24,24 @@ blueprint:
     * intervalle de réglage de la luminosité pour chaque type de réglage, en continu ou non
     * intervalle de temps entre chaque réglage de la luminosité, en continu
     * temps de transition d'un état à un autre
-    
+
+    **Compatible Zigbee2MQTT 2.x** via un trigger MQTT direct.
+
     **Visuel de la télécommande :**
-    
+
     ![Photo de la télécommande Sunricher ZG2858A](https://raw.githubusercontent.com/schiz0phr3ne/ha-blueprints/main/images/sunricher/sunricher_zg2858a/sunricher_zg2858a.png)
   domain: automation
 
   input:
-    integration:
-      name: Intégration
+    controller_topic:
+      name: Contrôleur - nom Zigbee2MQTT
       description: |
-        Intégration Zigbee utilisée par ce contrôleur.
+        Nom convivial (friendly name) du périphérique dans Zigbee2MQTT.
+        Ce nom est visible dans l'interface de Zigbee2MQTT (onglet Périphériques).
+
+        **Exemple :** si votre topic MQTT est `zigbee2mqtt/telecommande_chambre`, saisissez `telecommande_chambre`.
       selector:
-        select:
-          options:
-            - label: Zigbee2MQTT
-              value: zigbee2mqtt
-          mode: dropdown
-    controller_entity:
-      name: Contrôleur
-      description: |
-        Capteur d'action du contrôleur à utiliser pour l'automatisation.
-      selector:
-        entity:
-          domain: sensor
+        text:
     # Inputs for zone 1
     light_zone_1:
       name: Zone 1 - Lumière
@@ -201,13 +195,13 @@ blueprint:
       description: |
         La télécommande envoie une commande `on` ou une commande `off`, quelque soit l'état de l'appareil contrôlé, lors d'appuis sur le bouton d'alimentation.
         Une interprétation stricte de ces commandes peut donc causer des effets indésirables.
-        
+
         **Exemple :**
         Une commande `on` en zone 1 sera suivie d'une commande `off` en zone 2 ou 3.
         La lumière contrôlée en zone 2 ou 3 ne serait alors pas allumée, avant d'avoir rappuyé sur le bouton d'alimentation.
-        
+
         Pour éviter ces effets indésirables, les commandes `on` et `off` peuvent être consédirées en `toggle` (en bascule).
-        
+
         **Valeur par défaut :** activé
       default: True
       selector:
@@ -217,7 +211,7 @@ blueprint:
       description: |
         La luminosité peut être réglée en valeur numérique (de 0 à 255), ou en pourcentage (de 0 à 100%).
         Le réglage en valeur numérique permet plus de granularité, tandis que le réglage en pourcentage est plus aisé à comprendre.
-        
+
         **Valeur par défaut :** valeur numérique
       default: value
       selector:
@@ -232,11 +226,11 @@ blueprint:
       name: Luminosité - intervalle de réglage unitaire (valeur)
       description: |
         Nombre à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
-        
+
         **Minimum :** 1
         **Maximum :** 255
         **Pas :** 1
-        
+
         **Valeur par défaut :** 15
       default: 15
       selector:
@@ -248,11 +242,11 @@ blueprint:
       name: Luminosité - intervalle de réglage unitaire (pourcentage)
       description: |
         Nombre de pourcents à ajouter ou soustraire d'une luminosité, lors d'appuis simples sur les boutons de réglage de la luminosité.
-        
+
         **Minimum :** 1%
         **Maximum :** 100%
         **Pas :** 1%
-        
+
         **Valeur par défaut :** 5%
       default: 5
       selector:
@@ -265,11 +259,11 @@ blueprint:
       name: Luminosité - intervalle de réglage continu (valeur)
       description: |
         Nombre à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité.
-        
+
         **Minimum :** 1
         **Maximum :** 255
         **Pas :** 1
-        
+
         **Valeur par défaut :** 2
       default: 2
       selector:
@@ -281,11 +275,11 @@ blueprint:
       name: Luminosité - intervalle de réglage continu (pourcentage)
       description: |
         Nombre de pourcents à ajouter ou soustraire d'une luminosité, à chaque exécution de la boucle de réglage de la luminosité, lors d'appuis longs sur les boutons de réglage de la luminosité.
-        
+
         **Minimum :** 1%
         **Maximum :** 100%
         **Pas :** 1%
-        
+
         **Valeur par défaut :** 1%
       default: 1
       selector:
@@ -298,11 +292,11 @@ blueprint:
       name: Luminosité - nombre maximal d'exécutions de la boucle de réglage continu
       description: |
         Permet de déterminer le nombre maximal d'exécution de la boucle de réglage continu de la luminosité, pour éviter d'envoyer des commandes inutiles quand la lumière est à sa luminosité minimale ou maximale.
-        
+
         **Minimum :** 1
         **Maximum :** 255
         **Pas :** 1
-        
+
         **Valeur par défaut :** 125
       default: 125
       selector:
@@ -314,13 +308,13 @@ blueprint:
       name: Luminosité - temps entre chaque exécution de la boucle de réglage continu
       description: |
         Permet de déterminer l'intervalle de temps entre chaque exécution de la boucle de réglage continu de la luminosité, pour fluidifier le passage d'une luminosité à une autre.
-        
+
         **Attention** : un intervalle de temps trop court peut saturer un réseau (ZigBee, WiFi, etc.), et rendre inopérant le réglage de la luminosité mais aussi tout autre élément utilisant le même réseau.
-        
+
         **Minimum :** 0,01 seconde
         **Maximum :** 1 seconde
         **Pas :** 0,01 seconde
-        
+
         **Valeur par défaut :** 0,05 seconde
       default: 0.05
       selector:
@@ -334,11 +328,11 @@ blueprint:
       name: Transition - temps de transition des réglages unitaires
       description: |
         Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages unitaires.
-        
+
         **Minimum :** 0 seconde
         **Maximum :** 60 secondes
         **Pas :** 0,1 seconde
-        
+
         **Valeur par défaut :** 0,1 seconde
       default: 0.1
       selector:
@@ -352,11 +346,11 @@ blueprint:
       name: Transition - temps de transition des réglages continus
       description: |
         Permet de déterminer le temps nécessaire pour passer d'un état (couleur, luminosité) à un autre, lors des réglages continus.
-        
+
         **Minimum :** 0 seconde
         **Maximum :** 1 seconde
         **Pas :** 0,01 seconde
-        
+
         **Valeur par défaut :** 0,1 seconde
       default: 0.1
       selector:
@@ -366,11 +360,13 @@ blueprint:
           step: 0.01
           unit_of_measurement: 'seconde'
           mode: box
-          
+
+# Make the controller topic available for the MQTT trigger
+trigger_variables:
+  controller_topic: !input controller_topic
+
 variables:
   # Convert input tags to variables, to be used in templates
-  integration: !input integration
-  controller_entity: !input controller_entity
   light_zone_1: !input light_zone_1
   light_zone_2: !input light_zone_2
   light_zone_3: !input light_zone_3
@@ -384,61 +380,30 @@ variables:
   brightness_move_delay_loop_repeats: !input brightness_move_delay_loop_repeats
   transition_single: !input transition_single
   transition_loop: !input transition_loop
-  # Mapping between actions and integrations
-  actions_mapping:
-    zigbee2mqtt:
-      power_on: ['on_1', 'on_2', 'on_3']
-      power_off: ['off_1', 'off_2', 'off_3']
-      color_move: ['color_move_1', 'color_move_2', 'color_move_3']
-      color_temperature_move: ['color_temperature_move_1', 'color_temperature_move_2', 'color_temperature_move_3']
-      brightness_step_down: ['brightness_step_down_1', 'brightness_step_down_2', 'brightness_step_down_3']
-      brightness_step_up: ['brightness_step_up_1', 'brightness_step_up_2', 'brightness_step_up_3']
-      brightness_move_down: ['brightness_move_down_1', 'brightness_move_down_2', 'brightness_move_down_3']
-      brightness_move_up: ['brightness_move_up_1', 'brightness_move_up_2', 'brightness_move_up_3']
-      scenarios: ['recall_1_1', 'recall_2_1', 'recall_3_1', 'recall_4_1', 'recall_5_1', 'recall_1_2', 'recall_2_2', 'recall_3_2', 'recall_4_2', 'recall_5_2', 'recall_1_3', 'recall_2_3', 'recall_3_3', 'recall_4_3', 'recall_5_3']
-  # Pre-choose actions for buttons based on configured integration
-  power_on: '{{ actions_mapping[integration]["power_on"] }}'
-  power_off: '{{ actions_mapping[integration]["power_off"] }}'
-  color_move: '{{ actions_mapping[integration]["color_move"] }}'
-  color_temperature_move: '{{ actions_mapping[integration]["color_temperature_move"] }}'
-  brightness_step_down: '{{ actions_mapping[integration]["brightness_step_down"] }}'
-  brightness_step_up: '{{ actions_mapping[integration]["brightness_step_up"] }}'
-  brightness_move_down: '{{ actions_mapping[integration]["brightness_move_down"] }}'
-  brightness_move_up: '{{ actions_mapping[integration]["brightness_move_up"] }}'
-  scenarios: '{{ actions_mapping[integration]["scenarios"] }}' 
+  # Action lists
+  power_on: ['on_1', 'on_2', 'on_3']
+  power_off: ['off_1', 'off_2', 'off_3']
+  color_move: ['color_move_1', 'color_move_2', 'color_move_3']
+  color_temperature_move: ['color_temperature_move_1', 'color_temperature_move_2', 'color_temperature_move_3']
+  brightness_step_down: ['brightness_step_down_1', 'brightness_step_down_2', 'brightness_step_down_3']
+  brightness_step_up: ['brightness_step_up_1', 'brightness_step_up_2', 'brightness_step_up_3']
+  brightness_move_down: ['brightness_move_down_1', 'brightness_move_down_2', 'brightness_move_down_3']
+  brightness_move_up: ['brightness_move_up_1', 'brightness_move_up_2', 'brightness_move_up_3']
+  scenarios: ['recall_1_1', 'recall_2_1', 'recall_3_1', 'recall_4_1', 'recall_5_1', 'recall_1_2', 'recall_2_2', 'recall_3_2', 'recall_4_2', 'recall_5_2', 'recall_1_3', 'recall_2_3', 'recall_3_3', 'recall_4_3', 'recall_5_3']
+
 mode: restart
 max_exceeded: silent
 trigger:
-  # Trigger for Zigbee2MQTT
-  - platform: event
-    event_type: state_changed
-    event_data:
-      entity_id: !input controller_entity
+  # MQTT trigger listening directly on the Zigbee2MQTT device topic
+  - platform: mqtt
+    topic: "zigbee2mqtt/{{ controller_topic }}"
 condition:
-  - condition: and
-    conditions:
-      # Check that the button event is not empty
-      - >-
-        {%- set trigger_action -%}
-          {%- if integration == "zigbee2mqtt" -%}
-            {{ trigger.event.data.new_state.state }}
-          {%- elif integration_id == "deconz" -%}
-            {{ trigger.event.data.event }}
-          {%- elif integration_id == "zha" -%}
-            {{ trigger.event.data.command }}{{"_" if trigger.event.data.args|length > 0}}{{ trigger.event.data.args|join("_") }}
-          {%- endif -%}
-        {%- endset -%}
-        {{ trigger_action not in ["","None"] }}
-      # Only for Zigbee2MQTT, check if the event is relative to a real state change, and not only some minor changes in the sensor attributes.
-      # This is required since multiple state_changed events are fired for a single button press, with the result of the automation being triggered multiple times.
-      - '{{ integration != "zigbee2mqtt" or trigger.event.data.new_state.state != trigger.event.data.old_state.state }}'
+  # Only process messages that contain a non-empty action
+  - "{{ trigger.payload_json.action is defined and trigger.payload_json.action not in ['', None] }}"
 action:
   - variables:
-      # Extract button event from the trigger, to provide a single string value to check against
-      trigger_action: >-
-        {%- if integration == "zigbee2mqtt" -%}
-          {{ trigger.event.data.new_state.state }}
-        {%- endif -%}
+      # Extract the action from the MQTT payload
+      trigger_action: "{{ trigger.payload_json.action }}"
       # Define target entity from zone in the trigger action
       entity: >
         {% if "1" in trigger_action %}
@@ -475,18 +440,18 @@ action:
       - conditions: '{{ trigger_action | string in color_move }}'
         sequence:
           - service: light.turn_on
-            data_template:
+            data:
               xy_color:
-                - '{{ trigger.event.data.new_state.attributes.action_color.x | float }}'
-                - '{{ trigger.event.data.new_state.attributes.action_color.y | float }}'
+                - '{{ trigger.payload_json.action_color.x | float }}'
+                - '{{ trigger.payload_json.action_color.y | float }}'
               transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
       - conditions: '{{ trigger_action | string in color_temperature_move }}'
         sequence:
           - service: light.turn_on
-            data_template:
-              color_temp: '{{ trigger.event.data.new_state.attributes.action_color_temperature | int }}'
+            data:
+              color_temp: '{{ trigger.payload_json.action_color_temperature | int }}'
               transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'

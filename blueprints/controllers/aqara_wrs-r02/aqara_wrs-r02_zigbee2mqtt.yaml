@@ -2,21 +2,26 @@ blueprint:
   name: Aqara - Interrupteur sans-fil double (WRS-R02)
   description: |
     # Aqara - Interrupteur sans-fil double (WRS-R02)
-    
+
     Grâce aux automatisations créées avec ce blueprint, il est possible
     d'exécuter tout type d'actions, via l'utilisation de l'interrupteur.
-    
+
     Toutes les actions permises par l'interrupteur sont prises en comptes.
-    
-    Version 2022.5.5
+
+    **Compatible Zigbee2MQTT 2.x** via les MQTT device triggers.
+
+    **Note :** chaque action de l'interrupteur doit avoir été déclenchée au moins une
+    fois pour que Home Assistant la découvre automatiquement via MQTT.
   domain: automation
   input:
-    controller_entity:
+    controller_device:
       name: Contrôleur
-      description: Capteur d'action du contrôleur à utiliser pour l'automatisation.
+      description: Périphérique MQTT de l'interrupteur Aqara WRS-R02.
       selector:
-        entity:
-          domain: sensor
+        device:
+          filter:
+            - integration: mqtt
+              manufacturer: Aqara
 
     left_press_single:
       name: Gauche - appui simple
@@ -24,14 +29,14 @@ blueprint:
       default: []
       selector:
         action:
-    
+
     left_press_double:
       name: Gauche - appui double
       description: Action(s) à exécuter lors d'un appui double sur l'interrupteur gauche.
       default: []
       selector:
         action:
-    
+
     left_press_triple:
       name: Gauche - appui triple
       description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur gauche.
@@ -52,14 +57,14 @@ blueprint:
       default: []
       selector:
         action: {}
-    
+
     right_press_double:
       name: Droit - appui double
       description: Action(s) à exécuter lors d'un appui double sur l'interrupteur droit.
       default: []
       selector:
         action:
-    
+
     right_press_triple:
       name: Droit - appui triple
       description: Action(s) à exécuter lors d'un appui triple sur l'interrupteur droit.
@@ -80,14 +85,14 @@ blueprint:
       default: []
       selector:
         action:
-    
+
     both_press_double:
       name: Les deux - appui double
       description: Action(s) à exécuter lors d'un appui double sur les 2 interrupteurs.
       default: []
       selector:
         action:
-    
+
     both_press_triple:
       name: Les deux - appui triple
       description: Action(s) à exécuter lors d'un appui triple sur les 2 interrupteurs.
@@ -105,46 +110,101 @@ blueprint:
 mode: restart
 max_exceeded: silent
 trigger:
-- platform: state
-  entity_id: !input controller_entity
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: single_left
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: double_left
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: triple_left
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: hold_left
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: single_right
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: double_right
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: triple_right
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: hold_right
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: single_both
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: double_both
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: triple_both
+  - platform: device
+    domain: mqtt
+    device_id: !input controller_device
+    type: action
+    subtype: hold_both
 
 action:
-  - variables:
-      command: '{{ trigger.to_state.attributes.action }}'
-      
   - choose:
-      - conditions: "{{ command == 'single_left' }}"
+      - conditions: "{{ trigger.payload == 'single_left' }}"
         sequence: !input left_press_single
-      
-      - conditions: "{{ command == 'double_left' }}"
+
+      - conditions: "{{ trigger.payload == 'double_left' }}"
         sequence: !input left_press_double
-      
-      - conditions: "{{ command == 'triple_left' }}"
+
+      - conditions: "{{ trigger.payload == 'triple_left' }}"
         sequence: !input left_press_triple
-      
-      - conditions: "{{ command == 'hold_left' }}"
+
+      - conditions: "{{ trigger.payload == 'hold_left' }}"
         sequence: !input left_press_hold
 
-      - conditions: "{{ command == 'single_right' }}"
+      - conditions: "{{ trigger.payload == 'single_right' }}"
         sequence: !input right_press_single
-      
-      - conditions: "{{ command == 'double_right' }}"
+
+      - conditions: "{{ trigger.payload == 'double_right' }}"
         sequence: !input right_press_double
-      
-      - conditions: "{{ command == 'triple_right' }}"
+
+      - conditions: "{{ trigger.payload == 'triple_right' }}"
         sequence: !input right_press_triple
-      
-      - conditions: "{{ command == 'hold_right' }}"
+
+      - conditions: "{{ trigger.payload == 'hold_right' }}"
         sequence: !input right_press_hold
 
-      - conditions: "{{ command == 'single_both' }}"
+      - conditions: "{{ trigger.payload == 'single_both' }}"
         sequence: !input both_press_single
-      
-      - conditions: "{{ command == 'double_both' }}"
+
+      - conditions: "{{ trigger.payload == 'double_both' }}"
         sequence: !input both_press_double
-      
-      - conditions: "{{ command == 'triple_both' }}"
+
+      - conditions: "{{ trigger.payload == 'triple_both' }}"
         sequence: !input both_press_triple
-      
-      - conditions: "{{ command == 'hold_both' }}"
+
+      - conditions: "{{ trigger.payload == 'hold_both' }}"
         sequence: !input both_press_hold
