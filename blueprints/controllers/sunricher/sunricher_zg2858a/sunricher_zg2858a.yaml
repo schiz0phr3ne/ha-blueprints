@@ -402,8 +402,12 @@ condition:
   - "{{ trigger.payload_json.action is defined and trigger.payload_json.action not in ['', None] }}"
 action:
   - variables:
-      # Extract the action from the MQTT payload
+      # Extract the action and color data from the MQTT payload at trigger time,
+      # so they remain accessible in nested choose/sequence/data templates.
       trigger_action: "{{ trigger.payload_json.action }}"
+      action_color_temperature: "{{ trigger.payload_json.action_color_temperature | int(0) }}"
+      action_color_x: "{{ trigger.payload_json.action_color.x | float(0) if trigger.payload_json.action_color is not none and trigger.payload_json.action_color is mapping else 0 }}"
+      action_color_y: "{{ trigger.payload_json.action_color.y | float(0) if trigger.payload_json.action_color is not none and trigger.payload_json.action_color is mapping else 0 }}"
       # Define target entity from zone in the trigger action
       entity: >
         {% if "1" in trigger_action %}
@@ -442,8 +446,8 @@ action:
           - service: light.turn_on
             data:
               xy_color:
-                - '{{ trigger.payload_json.action_color.x | float }}'
-                - '{{ trigger.payload_json.action_color.y | float }}'
+                - '{{ action_color_x }}'
+                - '{{ action_color_y }}'
               transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
@@ -451,7 +455,7 @@ action:
         sequence:
           - service: light.turn_on
             data:
-              color_temp: '{{ trigger.payload_json.action_color_temperature | int }}'
+              color_temp: '{{ action_color_temperature }}'
               transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
