@@ -455,7 +455,7 @@ action:
         sequence:
           - service: light.turn_on
             data:
-              color_temp: '{{ action_color_temperature }}'
+              color_temp_kelvin: "{{ (1000000 / action_color_temperature) | int }}"
               transition: '{{ transition_single }}'
             target:
               device_id: '{{ entity }}'
