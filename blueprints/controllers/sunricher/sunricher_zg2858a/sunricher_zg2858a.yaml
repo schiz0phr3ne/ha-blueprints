@@ -405,9 +405,9 @@ action:
       # Extract the action and color data from the MQTT payload at trigger time,
       # so they remain accessible in nested choose/sequence/data templates.
       trigger_action: "{{ trigger.payload_json.action }}"
-      action_color_temperature: "{{ trigger.payload_json.action_color_temperature | default(0) | int }}"
-      action_color_x: "{{ trigger.payload_json.get('action_color', {}).get('x', 0) | float }}"
-      action_color_y: "{{ trigger.payload_json.get('action_color', {}).get('y', 0) | float }}"
+      action_color_temperature: "{{ trigger.payload_json['action_color_temperature'] | int if 'action_color_temperature' in trigger.payload_json else 0 }}"
+      action_color_x: "{{ trigger.payload_json['action_color']['x'] | float if 'action_color' in trigger.payload_json else 0 }}"
+      action_color_y: "{{ trigger.payload_json['action_color']['y'] | float if 'action_color' in trigger.payload_json else 0 }}"
       # Define target entity from zone in the trigger action
       entity: >
         {% if "1" in trigger_action %}
