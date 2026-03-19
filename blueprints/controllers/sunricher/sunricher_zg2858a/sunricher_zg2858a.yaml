@@ -406,8 +406,8 @@ action:
       # so they remain accessible in nested choose/sequence/data templates.
       trigger_action: "{{ trigger.payload_json.action }}"
       action_color_temperature: "{{ trigger.payload_json.action_color_temperature | default(0) | int }}"
-      action_color_x: "{{ trigger.payload_json.action_color.x | default(0) | float }}"
-      action_color_y: "{{ trigger.payload_json.action_color.y | default(0) | float }}"
+      action_color_x: "{{ trigger.payload_json.get('action_color', {}).get('x', 0) | float }}"
+      action_color_y: "{{ trigger.payload_json.get('action_color', {}).get('y', 0) | float }}"
       # Define target entity from zone in the trigger action
       entity: >
         {% if "1" in trigger_action %}
